@@ -5,7 +5,8 @@ public class PlayerInventory : MonoBehaviour
     public enum ItemType
     {
         NONE,
-        PLUNGER
+        PLUNGER,
+        SAGE_STICK
     }
 
     public ItemType CurrentItem { get; private set; } = ItemType.NONE;
