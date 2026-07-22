@@ -1,0 +1,75 @@
+name: Build Game
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build:
+    name: Build the Game
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      # Reclaim Hard Drive Space (Fixes "no space left on device")
+      - name: Free Disk Space for Unity Builder
+        run: |
+          echo "=== Disk space before cleanup ==="
+          df -h
+          
+          # Delete large unneeded toolsets and environments pre-installed on the runner
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          
+          echo "=== Disk space after cleanup ==="
+          df -h
+
+      # Cache Unity Library Folder
+      - name: Cache Library
+        uses: actions/cache@v4 # Upgraded to v4 to match actions standard
+        with:
+          path: Library
+          key: Library-WebGL-${{ hashFiles('Packages/manifest.json', 'ProjectSettings/ProjectVersion.txt') }}
+          restore-keys: |
+            Library-WebGL-
+            Library-
+
+      # Build
+      - name: Build 
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: WebGL
+          versioning: Semantic # Or None if you don't want GameCI tracking versioning
+          allowDirtyBuild: true # Prevents the "Branch is dirty" error block
+
+      # External Deploy Step
+      - name: Push Build to jbaldw.github.io Repo
+        if: github.ref == 'refs/heads/main'
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+        with:
+          # Source files inside the temporary runner
+          source-directory: 'build/WebGL/WebGL'
+          
+          # Target GitHub settings
+          destination-github-username: 'jbaldw'
+          destination-repository-name: 'jbaldw.github.io'
+          target-branch: 'main'
+          
+          # Target subfolder inside your GitHub Pages repo
+          target-directory: 'games/gamejam-2026'
+          
+          # Commit Settings
+          user-email: 'github-actions[bot]@users.noreply.github.com'
+          user-name: 'github-actions[bot]'
+          commit-message: 'chore: automated unity webgl deploy from game repo [skip ci]'
