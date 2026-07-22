@@ -1,31 +1,43 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public enum EVENT_TYPES
+public enum EventType
 {
     JUMP,
     PLAYER_HURT,
+    TOILET_UNCLOGGED,
+    GHOSTS_BUSTED
 }
 
-public class EVENT_BUS : MonoBehaviour
+public static class EVENT_BUS
 {
-    public static event EventHandler EventBus;
+    private static readonly Dictionary<EventType, Action> eventDictionary = new Dictionary<EventType, Action>();
 
-    public static void AddEventlistener(EventHandler eventListener)
+    public static void Subscribe(EventType eventType, Action listener)
     {
-        EventBus += eventListener;
-        Debug.Log("Added listener");
+        if (!eventDictionary.ContainsKey(eventType))
+        {
+            eventDictionary[eventType] = null;
+        }
+
+        eventDictionary[eventType] += listener;
     }
 
-    public static void RemoveEventlistener(EventHandler eventListener)
+    public static void Unsubscribe(EventType eventType, Action listener)
     {
-        EventBus -= eventListener;
-        Debug.Log("Removed listener");
+        if (eventDictionary.ContainsKey(eventType))
+        {
+            eventDictionary[eventType] -= listener;
+        }
     }
 
-    public static void InvokeEvent(object eventType)
+    public static void Publish(EventType eventType)
     {
-        EventBus?.Invoke(eventType, EventArgs.Empty);
-        Debug.Log("Event invoked: " + eventType);
+        if (eventDictionary.TryGetValue(eventType, out Action thisEvent))
+        {
+            thisEvent?.Invoke();
+            Debug.Log($"Event invoked: {eventType}");
+        }
     }
 }

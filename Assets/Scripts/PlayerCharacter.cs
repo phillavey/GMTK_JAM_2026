@@ -46,7 +46,7 @@ public class PlayerCharacter : MonoBehaviour
         rigidbody.linearVelocity = new Vector2(horizontal * horizontalMoveSpeed, vertical * verticalMoveSpeed);
 
         if (jump.WasPressedThisFrame()) {
-            EVENT_BUS.InvokeEvent(EVENT_TYPES.JUMP);
+            EVENT_BUS.Publish(EventType.JUMP);
             // Rest of jump code here
         }
     }
