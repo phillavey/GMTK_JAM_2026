@@ -13,6 +13,22 @@ jobs:
         with:
           lfs: true
 
+      # Reclaim Hard Drive Space (Fixes "no space left on device")
+      - name: Free Disk Space for Unity Builder
+        run: |
+          echo "=== Disk space before cleanup ==="
+          df -h
+          
+          # Delete large unneeded toolsets and environments pre-installed on the runner
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          
+          echo "=== Disk space after cleanup ==="
+          df -h
+
       # Cache Unity Library Folder
       - name: Cache Library
         uses: actions/cache@v4 # Upgraded to v4 to match actions standard
