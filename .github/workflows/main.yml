@@ -13,12 +13,14 @@ jobs:
         with:
           lfs: true
 
-      # Cache
-      - uses: actions/cache@v3
+      # Cache Unity Library Folder
+      - name: Cache Library
+        uses: actions/cache@v4 # Upgraded to v4 to match actions standard
         with:
           path: Library
-          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          key: Library-WebGL-${{ hashFiles('Packages/manifest.json', 'ProjectSettings/ProjectVersion.txt') }}
           restore-keys: |
+            Library-WebGL-
             Library-
 
       # Build
@@ -30,6 +32,8 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: WebGL
+          versioning: Semantic # Or None if you don't want GameCI tracking versioning
+          allowDirtyBuild: true # Prevents the "Branch is dirty" error block
 
       # Output
       - name: Upload
