@@ -35,9 +35,25 @@ jobs:
           versioning: Semantic # Or None if you don't want GameCI tracking versioning
           allowDirtyBuild: true # Prevents the "Branch is dirty" error block
 
-      # Output
-      - name: Upload
-        uses: actions/upload-artifact@v4
+      # External Deploy Step
+      - name: Push Build to jbaldw.github.io Repo
+        if: github.ref == 'refs/heads/main'
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.PAGES_DEPLOY_TOKEN }}
         with:
-          name: Build
-          path: build
+          # Source files inside the temporary runner
+          source-directory: 'build/WebGL/WebGL'
+          
+          # Target GitHub settings
+          destination-github-username: 'jbaldw'
+          destination-repository-name: 'jbaldw.github.io'
+          target-branch: 'main'
+          
+          # Target subfolder inside your GitHub Pages repo
+          target-directory: 'games/gamejam-2026'
+          
+          # Commit Settings
+          user-email: 'github-actions[bot]@users.noreply.github.com'
+          user-name: 'github-actions[bot]'
+          commit-message: 'chore: automated unity webgl deploy from game repo [skip ci]
