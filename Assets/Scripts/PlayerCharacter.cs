@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.GraphicsBuffer;
 
 public class PlayerCharacter : MonoBehaviour
 {
@@ -16,13 +14,13 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private GameObject playerInventory;
 
     // Code-only stuff (NEVER accessed via the unity editor)
-    private InputAction jump;
+    private InputAction attack;
     private InputAction move;
     private Vector2 moveValue;
 
     void Start()
     {
-        this.jump = InputSystem.actions.FindAction("Jump");
+        this.attack = InputSystem.actions.FindAction("Attack");
         this.move = InputSystem.actions.FindAction("Move");
     }
 
@@ -47,9 +45,8 @@ public class PlayerCharacter : MonoBehaviour
 
         rigidbody.linearVelocity = new Vector2(horizontal * horizontalMoveSpeed, vertical * verticalMoveSpeed);
 
-        if (jump.WasPressedThisFrame()) {
-            EVENT_BUS.Publish(EventType.JUMP);
-            // Rest of jump code here
+        if (attack.WasPressedThisFrame()) {
+            EVENT_BUS.Publish(EventType.ATTACK);
         }
     }
 

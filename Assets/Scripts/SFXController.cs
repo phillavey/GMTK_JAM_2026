@@ -1,21 +1,19 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SFXController : MonoBehaviour
 {
     void OnEnable()
     {
-        EVENT_BUS.Subscribe(EventType.JUMP, HandleJumpSFX);
+        EVENT_BUS.Subscribe(EventType.ATTACK, HandleAttackSFX);
     }
 
     private void OnDisable()
     {
-        EVENT_BUS.Unsubscribe(EventType.JUMP, HandleJumpSFX);
+        EVENT_BUS.Unsubscribe(EventType.ATTACK, HandleAttackSFX);
     }
 
-    void HandleJumpSFX()
+    void HandleAttackSFX()
     {
-        Debug.Log("HandleJumpSFX Fired!!!");
+        Debug.Log("HandleAttackSFX Fired!!!");
     }
 }

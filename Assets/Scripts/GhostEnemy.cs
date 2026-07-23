@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GhostEnemy : MonoBehaviour
+public class GhostEnemy : MonoBehaviour, IEnemy
 {
     [SerializeField] private GameObject playerCharacter;
 
@@ -15,5 +15,12 @@ public class GhostEnemy : MonoBehaviour
     void FixedUpdate()
     {
         transform.position = Vector3.MoveTowards(transform.position, playerCharacter.transform.position, moveSpeed);
+    }
+
+    public void HitWithWeapon(PlayerInventory.ItemType weapon)
+    {
+        // One shot kill
+        EVENT_BUS.Publish(EventType.ENEMY_KILLED);
+        Destroy(this);
     }
 }
