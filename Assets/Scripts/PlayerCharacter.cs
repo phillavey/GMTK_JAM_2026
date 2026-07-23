@@ -13,18 +13,17 @@ public class PlayerCharacter : MonoBehaviour
     // Serialized Fields (other objects attached via the editor)
     [SerializeField] private Rigidbody2D rigidbody;
     [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private GameObject playerInventory;
 
     // Code-only stuff (NEVER accessed via the unity editor)
     private InputAction jump;
     private InputAction move;
-    private Camera mainCamera;
     private Vector2 moveValue;
 
     void Start()
     {
         this.jump = InputSystem.actions.FindAction("Jump");
         this.move = InputSystem.actions.FindAction("Move");
-        this.mainCamera = Camera.main;
     }
 
     void FixedUpdate()
@@ -57,14 +56,5 @@ public class PlayerCharacter : MonoBehaviour
     private void DoAnimations()
     {
         // Animation code...
-        LookAtMouse();
-    }
-
-    private void LookAtMouse()
-    {
-        Vector2 mousePos = Mouse.current.position.ReadValue();
-        mousePos = mainCamera.ScreenToWorldPoint(mousePos);
-        float angle = Mathf.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 }
