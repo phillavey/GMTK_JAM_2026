@@ -9,7 +9,10 @@ public enum EventType
     PLAYER_HURT,
     TOILET_UNCLOGGED,
     GHOSTS_BUSTED,
-    ITEM_PICKUP
+    ITEM_PICKUP,
+    NUKE_DETECTED_PLAYER,
+    NUKE_NOT_DETECTED_PLAYER,
+    NUKE_DEFUSED
 }
 
 public static class EVENT_BUS
