@@ -93,14 +93,10 @@ public class PlayerInventory : MonoBehaviour
         switch (CurrentItem)
         {
             case ItemType.PLUNGER:
-                swinging = true;
                 StartCoroutine(DoSwingAnimation());
-                swinging = false;
                 break;
             case ItemType.SAGE_STICK:
-                swinging = true;
                 StartCoroutine(DoSwingAnimation());
-                swinging = false;
                 break;
             case ItemType.NONE:
                 break;
@@ -109,12 +105,13 @@ public class PlayerInventory : MonoBehaviour
 
     IEnumerator DoSwingAnimation()
     {
+        swinging = true;
         Debug.Log("ATTACKED!!!");
-
         playerAnimator.enabled = true;
         playerAnimator.SetTrigger("player_swing");
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(1f);
         playerAnimator.enabled = false;
+        swinging = false;
     }
 
     void DoThrowItem()
@@ -125,15 +122,16 @@ public class PlayerInventory : MonoBehaviour
             case ItemType.PLUNGER:
                 break;
             case ItemType.SAGE_STICK:
-                //Debug.Log(GetAngleFromPlayerToMouse());
                 thrownItem = Instantiate(sageStickPrefab);
+                StartCoroutine(throwItem(thrownItem));
                 break;
             case ItemType.NONE:
                 return;
         }
+    }
 
-        
-
+    private IEnumerator throwItem(GameObject thrownItem)
+    {
         thrownItem.SetActive(true);
         Rigidbody2D body = thrownItem.GetComponent<Rigidbody2D>();
         BoxCollider2D collider = thrownItem.GetComponent<BoxCollider2D>();
@@ -153,14 +151,9 @@ public class PlayerInventory : MonoBehaviour
         body.AddForce(spawnPoint * throwForce);
         DropItem(CurrentItem);
 
-        StartCoroutine(wait(2));
+        yield return new WaitForSeconds(2);
 
-        //body.bodyType = RigidbodyType2D.Kinematic;
-        //collider.isTrigger = true;
-    }
-
-    private IEnumerator wait(int secs)
-    {
-        yield return new WaitForSeconds(secs);
+        body.bodyType = RigidbodyType2D.Kinematic;
+        collider.isTrigger = true;
     }
 }

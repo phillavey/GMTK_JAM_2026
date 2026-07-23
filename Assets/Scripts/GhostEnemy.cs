@@ -20,7 +20,8 @@ public class GhostEnemy : MonoBehaviour, IEnemy
     public void HitWithWeapon(PlayerInventory.ItemType weapon)
     {
         // One shot kill
+        Debug.Log("GHoST HiT!!");
         EVENT_BUS.Publish(EventType.ENEMY_KILLED);
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 }
