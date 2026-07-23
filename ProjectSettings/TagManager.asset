@@ -38,8 +38,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: ALWAYS_BOTTOM
+    uniqueID: 1309724525
+    locked: 0
+  - name: HOUSE_BG
+    uniqueID: 2151924609
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: ALWAYS_TOP
+    uniqueID: 629720675
     locked: 0
   m_RenderingLayers:
   - Default

@@ -1,0 +1,585 @@
+fileFormatVersion: 2
+guid: fc3503e7fb4b1ce429d6715915ea2b9e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -734960726284270094
+    second: Sprite Items 1 - Decor_0
+  - first:
+      213: 949483232532667998
+    second: Sprite Items 1 - Decor_1
+  - first:
+      213: -1834091736030726807
+    second: Sprite Items 1 - Decor_2
+  - first:
+      213: 5908835623625259368
+    second: Sprite Items 1 - Decor_3
+  - first:
+      213: -6906109383164397216
+    second: Sprite Items 1 - Decor_4
+  - first:
+      213: -378842334366091250
+    second: Sprite Items 1 - Decor_5
+  - first:
+      213: 8701937764697863553
+    second: Sprite Items 1 - Decor_6
+  - first:
+      213: 5343056116749140169
+    second: Sprite Items 1 - Decor_7
+  - first:
+      213: 2425490417702514583
+    second: Sprite Items 1 - Decor_8
+  - first:
+      213: 7027533623136379574
+    second: Sprite Items 1 - Decor_9
+  - first:
+      213: -2746085122405714054
+    second: Sprite Items 1 - Decor_10
+  - first:
+      213: 9026975562468937062
+    second: Sprite Items 1 - Decor_11
+  - first:
+      213: -3826784086036450686
+    second: Sprite Items 1 - Decor_12
+  - first:
+      213: -1056015250921437318
+    second: Sprite Items 1 - Decor_13
+  - first:
+      213: 4149031750932468022
+    second: Sprite Items 1 - Decor_14
+  - first:
+      213: -3952042371910306024
+    second: Sprite Items 1 - Decor_15
+  - first:
+      213: -8832142625204165786
+    second: Sprite Items 1 - Decor_16
+  - first:
+      213: -2265391896437288916
+    second: Sprite Items 1 - Decor_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 63
+        width: 65
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f586f90d15ecc5f0800000000000000
+      internalID: -734960726284270094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_1
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 65
+        width: 26
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5e9c4b28fd3d2d00800000000000000
+      internalID: 949483232532667998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_2
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 95
+        width: 54
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 965b864984ffb86e0800000000000000
+      internalID: -1834091736030726807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_3
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 65
+        width: 26
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8697b5e71b6600250800000000000000
+      internalID: 5908835623625259368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_4
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 63
+        width: 66
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0697e7c2b129820a0800000000000000
+      internalID: -6906109383164397216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_5
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 31
+        width: 72
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e08ba3277e41ebaf0800000000000000
+      internalID: -378842334366091250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_6
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 0
+        width: 50
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1857f5aca4e73c870800000000000000
+      internalID: 8701937764697863553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_7
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 31
+        width: 23
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c08fcdba39562a40800000000000000
+      internalID: 5343056116749140169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_8
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 0
+        width: 18
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79fa5412fa219a120800000000000000
+      internalID: 2425490417702514583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_9
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 31
+        width: 23
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b26826c890d68160800000000000000
+      internalID: 7027533623136379574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_10
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 0
+        width: 18
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a77b50c6122f3e9d0800000000000000
+      internalID: -2746085122405714054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_11
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 31
+        width: 54
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66dc7157272464d70800000000000000
+      internalID: 9026975562468937062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_12
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 3
+        width: 28
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 282fdaf162884eac0800000000000000
+      internalID: -3826784086036450686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_13
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 6
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a77ce6b69b74851f0800000000000000
+      internalID: -1056015250921437318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_14
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 8
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 631952c1562549930800000000000000
+      internalID: 4149031750932468022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_15
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 10
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8177efcc6668729c0800000000000000
+      internalID: -3952042371910306024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_16
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 0
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 663ae1bb31ded6580800000000000000
+      internalID: -8832142625204165786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite Items 1 - Decor_17
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 0
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c209ecf9216bf80e0800000000000000
+      internalID: -2265391896437288916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Sprite Items 1 - Decor_0: -734960726284270094
+      Sprite Items 1 - Decor_1: 949483232532667998
+      Sprite Items 1 - Decor_10: -2746085122405714054
+      Sprite Items 1 - Decor_11: 9026975562468937062
+      Sprite Items 1 - Decor_12: -3826784086036450686
+      Sprite Items 1 - Decor_13: -1056015250921437318
+      Sprite Items 1 - Decor_14: 4149031750932468022
+      Sprite Items 1 - Decor_15: -3952042371910306024
+      Sprite Items 1 - Decor_16: -8832142625204165786
+      Sprite Items 1 - Decor_17: -2265391896437288916
+      Sprite Items 1 - Decor_2: -1834091736030726807
+      Sprite Items 1 - Decor_3: 5908835623625259368
+      Sprite Items 1 - Decor_4: -6906109383164397216
+      Sprite Items 1 - Decor_5: -378842334366091250
+      Sprite Items 1 - Decor_6: 8701937764697863553
+      Sprite Items 1 - Decor_7: 5343056116749140169
+      Sprite Items 1 - Decor_8: 2425490417702514583
+      Sprite Items 1 - Decor_9: 7027533623136379574
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

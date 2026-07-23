@@ -4,10 +4,12 @@ using UnityEngine;
 
 public enum EventType
 {
-    JUMP,
+    ATTACK,
+    ENEMY_KILLED,
     PLAYER_HURT,
     TOILET_UNCLOGGED,
-    GHOSTS_BUSTED
+    GHOSTS_BUSTED,
+    ITEM_PICKUP
 }
 
 public static class EVENT_BUS
@@ -37,7 +39,7 @@ public static class EVENT_BUS
         if (eventDictionary.TryGetValue(eventType, out Action thisEvent))
         {
             thisEvent?.Invoke();
-            Debug.Log($"Event invoked: {eventType}");
+            //Debug.Log($"Event invoked: {eventType}");
         }
     }
 }
