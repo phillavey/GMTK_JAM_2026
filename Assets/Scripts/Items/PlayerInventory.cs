@@ -12,7 +12,7 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private Sprite sageStickSprite;
     [SerializeField] private Animator playerAnimator;
 
-    private bool swinging;
+    public bool swinging;
 
     public enum ItemType
     {
@@ -89,9 +89,9 @@ public class PlayerInventory : MonoBehaviour
         switch (CurrentItem)
         {
             case ItemType.PLUNGER:
-                swinging = true;
+                //swinging = true;
                 StartCoroutine(DoSwingAnimation());
-                swinging = false;
+                //swinging = false;
                 break;
             case ItemType.SAGE_STICK:
                 break;
