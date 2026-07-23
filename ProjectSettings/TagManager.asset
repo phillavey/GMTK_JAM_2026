@@ -11,14 +11,14 @@ TagManager:
   - 
   - Water
   - UI
+  - Floor
   - Wall
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Decor
+  - Items
+  - Enemies
+  - Interactables
+  - Player
+  - UI_Custom
   - 
   - 
   - 
@@ -46,6 +46,9 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: DECOR
+    uniqueID: 3464037319
     locked: 0
   - name: ALWAYS_TOP
     uniqueID: 629720675

@@ -15,6 +15,7 @@ public class PlayerCharacter : MonoBehaviour
 
     // Code-only stuff (NEVER accessed via the unity editor)
     private InputAction attack;
+    private InputAction throw_;
     private InputAction move;
     private Vector2 moveValue;
 
@@ -22,6 +23,7 @@ public class PlayerCharacter : MonoBehaviour
     {
         this.attack = InputSystem.actions.FindAction("Attack");
         this.move = InputSystem.actions.FindAction("Move");
+        this.throw_ = InputSystem.actions.FindAction("Throw");
     }
 
     void FixedUpdate()
@@ -47,6 +49,11 @@ public class PlayerCharacter : MonoBehaviour
 
         if (attack.WasPressedThisFrame()) {
             EVENT_BUS.Publish(EventType.ATTACK);
+        }
+
+        if (throw_.WasPressedThisFrame())
+        {
+            EVENT_BUS.Publish(EventType.THOW_ITEM);
         }
     }
 

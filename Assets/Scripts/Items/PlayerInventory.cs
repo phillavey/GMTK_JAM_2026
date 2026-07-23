@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +12,8 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private Sprite plungerSprite;
     [SerializeField] private Sprite sageStickSprite;
     [SerializeField] private Animator playerAnimator;
+
+    [SerializeField] private GameObject sageStickPrefab;
 
     public bool swinging;
 
@@ -30,6 +33,7 @@ public class PlayerInventory : MonoBehaviour
         mainCamera = Camera.main;
 
         EVENT_BUS.Subscribe(EventType.ATTACK, Attack);
+        EVENT_BUS.Subscribe(EventType.THOW_ITEM, DoThrowItem);
     }
 
     void Update()
@@ -89,11 +93,14 @@ public class PlayerInventory : MonoBehaviour
         switch (CurrentItem)
         {
             case ItemType.PLUNGER:
-                //swinging = true;
+                swinging = true;
                 StartCoroutine(DoSwingAnimation());
-                //swinging = false;
+                swinging = false;
                 break;
             case ItemType.SAGE_STICK:
+                swinging = true;
+                StartCoroutine(DoSwingAnimation());
+                swinging = false;
                 break;
             case ItemType.NONE:
                 break;
@@ -108,5 +115,52 @@ public class PlayerInventory : MonoBehaviour
         playerAnimator.SetTrigger("player_swing");
         yield return new WaitForSeconds(0.2f);
         playerAnimator.enabled = false;
+    }
+
+    void DoThrowItem()
+    {
+        GameObject thrownItem = null;
+        switch (CurrentItem)
+        {
+            case ItemType.PLUNGER:
+                break;
+            case ItemType.SAGE_STICK:
+                //Debug.Log(GetAngleFromPlayerToMouse());
+                thrownItem = Instantiate(sageStickPrefab);
+                break;
+            case ItemType.NONE:
+                return;
+        }
+
+        
+
+        thrownItem.SetActive(true);
+        Rigidbody2D body = thrownItem.GetComponent<Rigidbody2D>();
+        BoxCollider2D collider = thrownItem.GetComponent<BoxCollider2D>();
+
+        float angle = GetAngleFromPlayerToMouse() * Mathf.Deg2Rad;
+        float throwForce = 800f;
+        Vector2 spawnPoint = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+        //Debug.Log(spawnPoint);
+
+        thrownItem.transform.position = transform.position + new Vector3(spawnPoint.x, spawnPoint.y, 0);
+        body.bodyType = RigidbodyType2D.Dynamic;
+        body.gravityScale = 0f;
+        body.mass = 1f;
+        collider.isTrigger = false;
+
+
+        body.AddForce(spawnPoint * throwForce);
+        DropItem(CurrentItem);
+
+        StartCoroutine(wait(2));
+
+        //body.bodyType = RigidbodyType2D.Kinematic;
+        //collider.isTrigger = true;
+    }
+
+    private IEnumerator wait(int secs)
+    {
+        yield return new WaitForSeconds(secs);
     }
 }

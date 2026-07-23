@@ -5,6 +5,7 @@ using UnityEngine;
 public enum EventType
 {
     ATTACK,
+    THOW_ITEM,
     ENEMY_KILLED,
     PLAYER_HURT,
     TOILET_UNCLOGGED,
