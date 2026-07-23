@@ -3226,7 +3226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f59ad84a27ec184e9fd919b4c4fc5cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainCamera
-  pc: {fileID: 1588644041}
+  pc: {fileID: 899770399}
   DistanceAway: 1
   minimumY: -101.12
   offsetY: 0
@@ -3520,11 +3520,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7859cffd2b5521c4dbbde5afbd9354a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NukePathfinding
-  playerTarget: {fileID: 0}
-  detectionRadius: 5
-  fleeDistance: 6
-  wanderRadius: 4
-  wanderWaitTime: 2
+  playerTarget: {fileID: 1588644046}
+  detectionRadius: 2
+  fleeDistance: 3
+  wanderRadius: 8
+  wanderWaitTime: 0.5
 --- !u!195 &899770401
 NavMeshAgent:
   m_ObjectHideFlags: 0
