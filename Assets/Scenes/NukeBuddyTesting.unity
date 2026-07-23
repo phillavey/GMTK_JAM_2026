@@ -3226,7 +3226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f59ad84a27ec184e9fd919b4c4fc5cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainCamera
-  pc: {fileID: 899770399}
+  pc: {fileID: 1588644041}
   DistanceAway: 1
   minimumY: -101.12
   offsetY: 0
@@ -3317,7 +3317,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 2
+  orthographic size: 11.27
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4459,6 +4459,7 @@ MonoBehaviour:
   plungerSprite: {fileID: -2038882294785911179, guid: 32096171912660e42bb702a705a5482a, type: 3}
   sageStickSprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
   playerAnimator: {fileID: 1588644042}
+  swinging: 0
 --- !u!4 &1662241724
 Transform:
   m_ObjectHideFlags: 0
