@@ -7,7 +7,7 @@ public enum EventType
     REQUEST_MUSIC,
     EVENT_STARTED,
     ATTACK,
-    THOW_ITEM,
+    THROW_ITEM,
     ENEMY_KILLED,
     PLAYER_HURT,
     TOILET_UNCLOGGED,

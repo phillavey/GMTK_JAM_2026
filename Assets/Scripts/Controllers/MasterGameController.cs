@@ -20,6 +20,7 @@ public class MasterGameController : MonoBehaviour
     [Header("Spawnables")]
     [Tooltip("Ghost Prefab for spawning ghosts event.")]
     [SerializeField] private GameObject ghostPrefab;
+    [SerializeField] private GameObject bob; /* <- prefab */
     [SerializeField] private Light2D globalLight;
 
     private System.Random random;
@@ -56,25 +57,24 @@ public class MasterGameController : MonoBehaviour
         if (Keyboard.current != null && Keyboard.current.tKey.wasPressedThisFrame)
         {
             Debug.Log("SPAWNING TASK");
-            SpawnRandomTask();
+            SpawnRandomTask(null);
         }
     }
 
     void SpawnRandomTask(PublishEventArgs args)
     {
-        //Array tasks = Enum.GetValues(typeof(GAME_TASK));
-        //Array rooms = Enum.GetValues(typeof(ROOM));
-        //GAME_TASK randomTask = (GAME_TASK)tasks.GetValue(random.Next(tasks.Length));
-        //ROOM randomRoom = (ROOM)rooms.GetValue(random.Next(rooms.Length));
-        //SpawnTask(randomTask, randomRoom);
-        SpawnDispellingDarknessTask();
+        Array tasks = Enum.GetValues(typeof(GAME_TASK));
+        Array rooms = Enum.GetValues(typeof(ROOM));
+        GAME_TASK randomTask = (GAME_TASK)tasks.GetValue(random.Next(tasks.Length));
+        ROOM randomRoom = (ROOM)rooms.GetValue(random.Next(rooms.Length));
+        SpawnTask(randomTask, randomRoom);
     }
 
     void SpawnTask(GAME_TASK task, ROOM room)
     {
         // EVENT_BUS.Publish(EventType.EVENT_STARTED, task, room);
         // ^ Would be soooo nice
-        Debug.Log($"task: {task} | room: {room}");
+        Debug.LogWarning($"SPAWNED TASK {task} IN ROOM {room}!");
         SetTaskSpawnPointForRoom(room);
         switch (task)
         {
@@ -91,7 +91,7 @@ public class MasterGameController : MonoBehaviour
                 SpawnDispellingDarknessTask();
                 break;
             case GAME_TASK.FEEDING_BOB:
-                SpawnGhostbustingTask();
+                SpawnFeedBobTask();
                 break;
         }
     }
@@ -116,6 +116,7 @@ public class MasterGameController : MonoBehaviour
                 taskSpawnPoint = PurpleRoomCenter;
                 break;
             default:
+                taskSpawnPoint = LivingRoomCenter;
                 break;
         }
     }
@@ -139,6 +140,7 @@ public class MasterGameController : MonoBehaviour
             ghosts[i] = ghost;
         }
 
+        // Setup ^, then activate
         foreach (GameObject ghost in ghosts)
         {
             ghost.SetActive(true);
@@ -151,5 +153,14 @@ public class MasterGameController : MonoBehaviour
         {
             globalLight.intensity = 0.05f;
         }
+    }
+
+    void SpawnFeedBobTask()
+    {
+        GameObject bobington = Instantiate(bob);
+
+        bobington.transform.position = new Vector3(taskSpawnPoint.x, taskSpawnPoint.y, 0);
+
+        bobington.SetActive(true);
     }
 }

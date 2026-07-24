@@ -11,11 +11,13 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private SpriteRenderer itemRenderer;
     [SerializeField] private Sprite plungerSprite;
     [SerializeField] private Sprite sageStickSprite;
+    [SerializeField] private Sprite foodSprite;
     [SerializeField] private Sprite lanternSprite;
     [SerializeField] private Animator playerAnimator;
 
     [SerializeField] private GameObject sageStickPrefab;
     [SerializeField] private GameObject lanternPrefab;
+    [SerializeField] private GameObject foodPrefab;
 
     public bool swinging;
 
@@ -24,7 +26,8 @@ public class PlayerInventory : MonoBehaviour
         NONE,
         PLUNGER,
         SAGE_STICK,
-        LANTERN
+        LANTERN,
+        FOOD,
     }
 
     public ItemType CurrentItem { get; private set; } = ItemType.NONE;
@@ -36,7 +39,7 @@ public class PlayerInventory : MonoBehaviour
         mainCamera = Camera.main;
 
         EVENT_BUS.Subscribe(EventType.ATTACK, Attack);
-        EVENT_BUS.Subscribe(EventType.THOW_ITEM, DoThrowItem);
+        EVENT_BUS.Subscribe(EventType.THROW_ITEM, DoThrowItem);
     }
 
     void Update()
@@ -74,6 +77,9 @@ public class PlayerInventory : MonoBehaviour
             case ItemType.LANTERN:
                 itemRenderer.sprite = lanternSprite;
                 break;
+            case ItemType.FOOD:
+                itemRenderer.sprite = foodSprite;
+                break;
         }        
     }
 
@@ -95,20 +101,21 @@ public class PlayerInventory : MonoBehaviour
 
     private void Attack(PublishEventArgs args)
     {
-        switch (CurrentItem)
-        {
-            case ItemType.PLUNGER:
-                StartCoroutine(DoSwingAnimation());
-                break;
-            case ItemType.SAGE_STICK:
-                StartCoroutine(DoSwingAnimation());
-                break;
-            case ItemType.LANTERN:
-                StartCoroutine(DoSwingAnimation());
-                break;
-            case ItemType.NONE:
-                break;
-        }
+        StartCoroutine(DoSwingAnimation());
+        //switch (CurrentItem)
+        //{
+        //    case ItemType.PLUNGER:
+        //        StartCoroutine(DoSwingAnimation());
+        //        break;
+        //    case ItemType.SAGE_STICK:
+        //        StartCoroutine(DoSwingAnimation());
+        //        break;
+        //    case ItemType.LANTERN:
+        //        StartCoroutine(DoSwingAnimation());
+        //        break;
+        //    case ItemType.NONE:
+        //        break;
+        //}
     }
 
     IEnumerator DoSwingAnimation()
@@ -133,6 +140,10 @@ public class PlayerInventory : MonoBehaviour
                 thrownItem = Instantiate(sageStickPrefab);
                 StartCoroutine(throwItem(thrownItem));
                 break;
+            case ItemType.FOOD:
+                thrownItem = Instantiate(foodPrefab);
+                StartCoroutine(throwItem(thrownItem));
+                break;
             case ItemType.LANTERN:
                 thrownItem = Instantiate(lanternPrefab);
                 EVENT_BUS.Publish(EventType.LANTERN_DROPPED, null);
@@ -150,7 +161,7 @@ public class PlayerInventory : MonoBehaviour
         BoxCollider2D collider = thrownItem.GetComponent<BoxCollider2D>();
 
         float angle = GetAngleFromPlayerToMouse() * Mathf.Deg2Rad;
-        float throwForce = 1000f;
+        float throwForce = 1100f;
         Vector2 spawnPoint = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 
         thrownItem.transform.position = transform.position + new Vector3(spawnPoint.x, spawnPoint.y, 0);
@@ -158,13 +169,16 @@ public class PlayerInventory : MonoBehaviour
         body.gravityScale = 0f;
         body.mass = 1f;
         collider.isTrigger = false;
-
+        body.freezeRotation = false;
+        body.angularVelocity = -800f;
 
         body.AddForce(spawnPoint * throwForce);
         DropItem(CurrentItem);
 
         yield return new WaitForSeconds(0.75f);
         body.linearVelocity = Vector2.zero;
+        body.freezeRotation = true;
+        body.rotation = 0f;
 
         body.bodyType = RigidbodyType2D.Kinematic;
         collider.isTrigger = true;
