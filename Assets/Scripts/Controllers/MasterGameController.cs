@@ -56,7 +56,7 @@ public class MasterGameController : MonoBehaviour
         if (Keyboard.current != null && Keyboard.current.tKey.wasPressedThisFrame)
         {
             Debug.Log("SPAWNING TASK");
-            SpawnRandomTask();
+            SpawnRandomTask(null);
         }
     }
 
