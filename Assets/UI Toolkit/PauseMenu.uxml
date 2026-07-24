@@ -1,0 +1,4 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Label text="PAUSE" name="PauseLabel" style="-unity-text-align: middle-center; border-top-color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); height: 27px; width: 172px; position: absolute; top: 143px; left: 837px; -unity-font-style: bold; -unity-text-outline-width: 1px; color: rgb(0, 0, 0); font-size: 18px;"/>
+    <ui:Label text="Right-Click to Pick Up Item&#10;Right-Click to Throw Item&#10;Left-Click to Use Item&#10;Right-Click to Interact with Summoning Circle&#10;Esc to Pause" name="Controls" style="height: 101px; width: 313px; position: absolute; top: 212px; left: 768px; background-color: rgb(255, 255, 255); -unity-text-align: upper-center;"/>
+</ui:UXML>
