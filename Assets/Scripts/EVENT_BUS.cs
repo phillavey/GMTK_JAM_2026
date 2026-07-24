@@ -18,7 +18,9 @@ public enum EventType
     TIMER_FINISHED,
     TIMER_STARTED,
     TIMER_STOPPED,
-    TASK_COMPLETED
+    TASK_COMPLETED,
+    LANTERN_PICKED_UP,
+    LANTERN_DROPPED,
 }
 
 public static class EVENT_BUS
