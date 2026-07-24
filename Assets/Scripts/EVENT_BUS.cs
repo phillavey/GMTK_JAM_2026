@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum EventType
 {
+    REQUEST_MUSIC,
     EVENT_STARTED,
     ATTACK,
     THOW_ITEM,
@@ -21,6 +22,7 @@ public enum EventType
     TASK_COMPLETED,
     LANTERN_PICKED_UP,
     LANTERN_DROPPED,
+    BOB_FED
 }
 
 public static class EVENT_BUS

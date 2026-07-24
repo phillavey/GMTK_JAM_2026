@@ -25,6 +25,8 @@ public class PlayerCharacter : MonoBehaviour
         this.attack = InputSystem.actions.FindAction("Attack");
         this.move = InputSystem.actions.FindAction("Move");
         this.throw_ = InputSystem.actions.FindAction("Throw");
+
+        MusicController.instance.PlayMusic("main_theme");
     }
 
     void FixedUpdate()
