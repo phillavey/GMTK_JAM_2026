@@ -39,13 +39,11 @@ public class NukePathfinding : MonoBehaviour
 
         if (distanceToPlayer <= detectionRadius)
         {
-            Debug.Log("Nuke detected player! Fleeing...");
             EVENT_BUS.Publish(EventType.NUKE_DETECTED_PLAYER, null);
             FleeFromPlayer();
         }
         else
         {
-            Debug.Log("Nuke did not detect player! Wandering aimlessly...");
             EVENT_BUS.Publish(EventType.NUKE_NOT_DETECTED_PLAYER, null);
             WanderAimlessly();
         }
