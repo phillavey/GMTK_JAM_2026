@@ -51863,7 +51863,6 @@ Transform:
   - {fileID: 104044917}
   - {fileID: 1833908306}
   - {fileID: 1459179038}
-  - {fileID: 2118177196}
   - {fileID: 529437480}
   - {fileID: 671244771}
   - {fileID: 1600055792}
@@ -53660,6 +53659,7 @@ Transform:
   m_Children:
   - {fileID: 2031378764}
   - {fileID: 393174279}
+  - {fileID: 1172468200}
   m_Father: {fileID: 1405063011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1568032952
@@ -54373,10 +54373,10 @@ MonoBehaviour:
   plungerSprite: {fileID: -7904428506214239501, guid: b7ab274015380004fb53791f36afff7c, type: 3}
   sageStickSprite: {fileID: -7904428506214239501, guid: b7ab274015380004fb53791f36afff7c, type: 3}
   foodSprite: {fileID: 4597297938460583250, guid: 4ca7300b4ee6ebf44a2fca505830ecdc, type: 3}
-  lanternSprite: {fileID: 0}
+  lanternSprite: {fileID: 795000108, guid: 30fd02d0fafecce4c8d9fca5965fd571, type: 3}
   playerAnimator: {fileID: 1049721357}
   sageStickPrefab: {fileID: 393174278}
-  lanternPrefab: {fileID: 0}
+  lanternPrefab: {fileID: 1172468195}
   foodPrefab: {fileID: 2031378763}
   swinging: 0
 --- !u!114 &1708468821
@@ -55577,6 +55577,58 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!1 &2078710505
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2078710507}
+  - component: {fileID: 2078710506}
+  m_Layer: 0
+  m_Name: MasterGameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2078710506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078710505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b18fe313be67014ca3fb0b29066eee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MasterGameController
+  LivingRoomCenter: {x: 0, y: 0}
+  BedRoomCenter: {x: -69, y: -23}
+  KitchenCenter: {x: -88, y: 7}
+  PurpleRoomCenter: {x: -23, y: -33}
+  BathRoomCenter: {x: -57, y: 27}
+  ghostPrefab: {fileID: 2098495356}
+  bob: {fileID: 782560909}
+  globalLight: {fileID: 619394801}
+--- !u!4 &2078710507
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078710505}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -40.52025, y: -5.52866, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2085055840
 GameObject:
   m_ObjectHideFlags: 0
@@ -59017,6 +59069,7 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 2078710507}
   - {fileID: 1194513242}
   - {fileID: 519420032}
   - {fileID: 619394802}
@@ -59024,3 +59077,7 @@ SceneRoots:
   - {fileID: 1405063011}
   - {fileID: 1227761823}
   - {fileID: 678691591}
+  - {fileID: 543898134}
+  - {fileID: 1007505560}
+  - {fileID: 1092336881}
+  - {fileID: 1568032953}
