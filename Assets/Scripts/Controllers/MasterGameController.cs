@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 public class MasterGameController : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class MasterGameController : MonoBehaviour
     [Header("Spawnables")]
     [Tooltip("Ghost Prefab for spawning ghosts event.")]
     [SerializeField] private GameObject ghostPrefab;
+    [SerializeField] private Light2D globalLight;
 
     private System.Random random;
     private Vector2 taskSpawnPoint;
@@ -49,6 +51,7 @@ public class MasterGameController : MonoBehaviour
     {
         taskSpawnPoint = Vector2.zero;
         random = new System.Random();
+        EVENT_BUS.Subscribe(EventType.EVENT_STARTED, SpawnRandomTask);
     }
 
     void Update()
@@ -60,13 +63,14 @@ public class MasterGameController : MonoBehaviour
         }
     }
 
-    void SpawnRandomTask()
+    void SpawnRandomTask(PublishEventArgs args)
     {
-        Array tasks = Enum.GetValues(typeof(GAME_TASK));
-        Array rooms = Enum.GetValues(typeof(ROOM));
-        GAME_TASK randomTask = (GAME_TASK)tasks.GetValue(random.Next(tasks.Length));
-        ROOM randomRoom = (ROOM)rooms.GetValue(random.Next(rooms.Length));
-        SpawnTask(randomTask, randomRoom);
+        //Array tasks = Enum.GetValues(typeof(GAME_TASK));
+        //Array rooms = Enum.GetValues(typeof(ROOM));
+        //GAME_TASK randomTask = (GAME_TASK)tasks.GetValue(random.Next(tasks.Length));
+        //ROOM randomRoom = (ROOM)rooms.GetValue(random.Next(rooms.Length));
+        //SpawnTask(randomTask, randomRoom);
+        SpawnDispellingDarknessTask();
     }
 
     void SpawnTask(GAME_TASK task, ROOM room)
@@ -84,6 +88,7 @@ public class MasterGameController : MonoBehaviour
             case GAME_TASK.TOILET_PLUNGING:
                 break;
             case GAME_TASK.DISPELLING_DARKNESS:
+                SpawnDispellingDarknessTask();
                 break;
             case GAME_TASK.FEEDING_BOB:
                 break;
@@ -122,6 +127,14 @@ public class MasterGameController : MonoBehaviour
         foreach (GameObject ghost in ghosts)
         {
             ghost.SetActive(true);
+        }
+    }
+
+    void SpawnDispellingDarknessTask()
+    {
+        if (globalLight != null)
+        {
+            globalLight.intensity = 0.05f;
         }
     }
 }

@@ -51012,6 +51012,7 @@ Transform:
   - {fileID: 645900139}
   - {fileID: 354254397}
   - {fileID: 1701950076}
+  - {fileID: 1509139911}
   - {fileID: 1499423454}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -51341,6 +51342,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1676602492}
   - {fileID: 393174279}
   m_Father: {fileID: 1405063011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -51624,8 +51626,10 @@ MonoBehaviour:
   itemRenderer: {fileID: 1467477340}
   plungerSprite: {fileID: -7904428506214239501, guid: b7ab274015380004fb53791f36afff7c, type: 3}
   sageStickSprite: {fileID: -7904428506214239501, guid: b7ab274015380004fb53791f36afff7c, type: 3}
+  lanternSprite: {fileID: 795000108, guid: 30fd02d0fafecce4c8d9fca5965fd571, type: 3}
   playerAnimator: {fileID: 1049721357}
   sageStickPrefab: {fileID: 393174278}
+  lanternPrefab: {fileID: 1676602491}
   swinging: 0
 --- !u!114 &1708468821
 MonoBehaviour:
@@ -55309,6 +55313,8 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1092336881}
+  - {fileID: 543898134}
   - {fileID: 1194513242}
   - {fileID: 519420032}
   - {fileID: 619394802}

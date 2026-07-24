@@ -11,9 +11,11 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private SpriteRenderer itemRenderer;
     [SerializeField] private Sprite plungerSprite;
     [SerializeField] private Sprite sageStickSprite;
+    [SerializeField] private Sprite lanternSprite;
     [SerializeField] private Animator playerAnimator;
 
     [SerializeField] private GameObject sageStickPrefab;
+    [SerializeField] private GameObject lanternPrefab;
 
     public bool swinging;
 
@@ -21,7 +23,8 @@ public class PlayerInventory : MonoBehaviour
     {
         NONE,
         PLUNGER,
-        SAGE_STICK
+        SAGE_STICK,
+        LANTERN
     }
 
     public ItemType CurrentItem { get; private set; } = ItemType.NONE;
@@ -68,7 +71,9 @@ public class PlayerInventory : MonoBehaviour
             case ItemType.SAGE_STICK:
                 itemRenderer.sprite = sageStickSprite;
                 break;
-
+            case ItemType.LANTERN:
+                itemRenderer.sprite = lanternSprite;
+                break;
         }        
     }
 
@@ -98,6 +103,9 @@ public class PlayerInventory : MonoBehaviour
             case ItemType.SAGE_STICK:
                 StartCoroutine(DoSwingAnimation());
                 break;
+            case ItemType.LANTERN:
+                StartCoroutine(DoSwingAnimation());
+                break;
             case ItemType.NONE:
                 break;
         }
@@ -123,6 +131,11 @@ public class PlayerInventory : MonoBehaviour
                 break;
             case ItemType.SAGE_STICK:
                 thrownItem = Instantiate(sageStickPrefab);
+                StartCoroutine(throwItem(thrownItem));
+                break;
+            case ItemType.LANTERN:
+                thrownItem = Instantiate(lanternPrefab);
+                EVENT_BUS.Publish(EventType.LANTERN_DROPPED, null);
                 StartCoroutine(throwItem(thrownItem));
                 break;
             case ItemType.NONE:

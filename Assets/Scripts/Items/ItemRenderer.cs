@@ -1,8 +1,15 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class ItemRenderer : MonoBehaviour
 {
     private PlayerInventory playerInventory;
+
+    private void Awake()
+    {
+        EVENT_BUS.Subscribe(EventType.LANTERN_PICKED_UP, LightLantern);
+        EVENT_BUS.Subscribe(EventType.LANTERN_DROPPED, LightLantern);
+    }
 
     private void Start()
     {
@@ -17,6 +24,18 @@ public class ItemRenderer : MonoBehaviour
         if (enemy != null && playerInventory.swinging)
         {
             enemy.HitWithWeapon(playerInventory.CurrentItem);
+        }
+    }
+
+    private void LightLantern(PublishEventArgs args)
+    {
+        if (playerInventory.CurrentItem == PlayerInventory.ItemType.LANTERN)
+        {
+            Light2D lanternLight = GetComponentInChildren<Light2D>();
+            if (lanternLight != null)
+            {
+                lanternLight.enabled = !lanternLight.enabled;
+            }
         }
     }
 }
