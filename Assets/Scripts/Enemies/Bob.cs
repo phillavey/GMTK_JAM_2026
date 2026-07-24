@@ -4,7 +4,6 @@ public class Bob : MonoBehaviour, IEnemy
 {
     public void HitWithWeapon(PlayerInventory.ItemType weapon)
     {
-        Debug.Log("BOB HIT");
         SFX_Controller.instance?.playSFX("whiff", transform, 1f);
         if (weapon == PlayerInventory.ItemType.FOOD)
         {

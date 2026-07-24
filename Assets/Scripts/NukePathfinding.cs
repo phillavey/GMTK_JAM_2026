@@ -35,18 +35,7 @@ public class NukePathfinding : MonoBehaviour
         if (!agent.isActiveAndEnabled || !agent.isOnNavMesh || playerTarget == null)
             return;
 
-        float distanceToPlayer = Vector2.Distance(transform.position, playerTarget.position);
-
-        if (distanceToPlayer <= detectionRadius)
-        {
-            EVENT_BUS.Publish(EventType.NUKE_DETECTED_PLAYER, null);
-            FleeFromPlayer();
-        }
-        else
-        {
-            EVENT_BUS.Publish(EventType.NUKE_NOT_DETECTED_PLAYER, null);
-            WanderAimlessly();
-        }
+        WanderAimlessly();
     }
 
     private void FleeFromPlayer()
