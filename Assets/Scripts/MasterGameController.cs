@@ -49,6 +49,7 @@ public class MasterGameController : MonoBehaviour
     {
         taskSpawnPoint = Vector2.zero;
         random = new System.Random();
+        EVENT_BUS.Subscribe(EventType.SPAWN_EVENT, SpawnRandomTask);
     }
 
     void Update()
@@ -60,13 +61,15 @@ public class MasterGameController : MonoBehaviour
         }
     }
 
-    void SpawnRandomTask()
+    void SpawnRandomTask(PublishEventArgs args)
     {
-        Array tasks = Enum.GetValues(typeof(GAME_TASK));
-        Array rooms = Enum.GetValues(typeof(ROOM));
-        GAME_TASK randomTask = (GAME_TASK)tasks.GetValue(random.Next(tasks.Length));
-        ROOM randomRoom = (ROOM)rooms.GetValue(random.Next(rooms.Length));
-        SpawnTask(randomTask, randomRoom);
+        //Array tasks = Enum.GetValues(typeof(GAME_TASK));
+        //Array rooms = Enum.GetValues(typeof(ROOM));
+        //GAME_TASK randomTask = (GAME_TASK)tasks.GetValue(random.Next(tasks.Length));
+        //ROOM randomRoom = (ROOM)rooms.GetValue(random.Next(rooms.Length));
+        //SpawnTask(randomTask, randomRoom);
+        Debug.Log("SPAWNING TASK");
+        SpawnTask(GAME_TASK.GHOSTBUSTING, ROOM.LIVING_ROOM);
     }
 
     void SpawnTask(GAME_TASK task, ROOM room)

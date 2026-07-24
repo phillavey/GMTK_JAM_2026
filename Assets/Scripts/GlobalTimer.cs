@@ -8,6 +8,7 @@ public class GlobalTimer : MonoBehaviour
     public bool IsTimerRunning { get; private set; }
 
     private float TaskCompletionIncreaseAmount = 15f;
+    private float SpawnTimer = 30f;
 
     void OnEnable()
     {
@@ -44,6 +45,13 @@ public class GlobalTimer : MonoBehaviour
         }
 
         TimeRemaining -= Time.deltaTime;
+        SpawnTimer -= Time.deltaTime;
+
+        if (SpawnTimer <= 0)
+        {
+            SpawnTimer = 30f; // Reset the spawn timer
+            EVENT_BUS.Publish(EventType.SPAWN_EVENT, null);
+        }
 
         if (TimeRemaining <= 0)
         {
