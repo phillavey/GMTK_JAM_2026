@@ -49,23 +49,23 @@ public class GlobalTimer : MonoBehaviour
         {
             TimeRemaining = 0;
             IsTimerRunning = false;
-            EVENT_BUS.Publish(EventType.TIMER_FINISHED);
+            EVENT_BUS.Publish(EventType.TIMER_FINISHED, null);
         }
     }
 
     public void StartTimer()
     {
-        EVENT_BUS.Publish(EventType.TIMER_STARTED);
+        EVENT_BUS.Publish(EventType.TIMER_STARTED, null);
         IsTimerRunning = true;
     }
 
     public void StopTimer()
     {
-        EVENT_BUS.Publish(EventType.TIMER_STOPPED);
+        EVENT_BUS.Publish(EventType.TIMER_STOPPED, null);
         IsTimerRunning = false;
     }
 
-    void IncreaseTime()
+    void IncreaseTime(PublishEventArgs args)
     {
         TimeRemaining += TaskCompletionIncreaseAmount;
     }

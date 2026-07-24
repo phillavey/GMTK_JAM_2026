@@ -18,7 +18,7 @@ public class TaskCompletionMock : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            EVENT_BUS.Publish(EventType.TASK_COMPLETED);
+            EVENT_BUS.Publish(EventType.TASK_COMPLETED, null);
             Debug.Log("Task Completed Event Published!");
         }
     }

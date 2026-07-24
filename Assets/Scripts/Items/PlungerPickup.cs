@@ -10,7 +10,7 @@ public class PlungerPickup : MonoBehaviour, IInteractable
             return;
         }
 
-        EVENT_BUS.Publish(EventType.ITEM_PICKUP);
+        EVENT_BUS.Publish(EventType.ITEM_PICKUP, null);
 
         inventory.PickUpItem(PlayerInventory.ItemType.PLUNGER);
 

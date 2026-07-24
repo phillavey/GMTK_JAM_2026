@@ -7,6 +7,6 @@ public interface IEnemy
     void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("COLLIDED");
-        EVENT_BUS.Publish(EventType.PLAYER_HURT);
+        EVENT_BUS.Publish(EventType.PLAYER_HURT, null);
     }
 }
