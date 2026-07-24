@@ -54,7 +54,7 @@ public class PlayerCharacter : MonoBehaviour
 
         if (throw_.WasPressedThisFrame())
         {
-            EVENT_BUS.Publish(EventType.THOW_ITEM);
+            EVENT_BUS.Publish(EventType.THOW_ITEM, null);
         }
     }
 

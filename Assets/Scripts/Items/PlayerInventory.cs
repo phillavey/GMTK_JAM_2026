@@ -114,7 +114,7 @@ public class PlayerInventory : MonoBehaviour
         swinging = false;
     }
 
-    void DoThrowItem()
+    void DoThrowItem(PublishEventArgs args)
     {
         GameObject thrownItem = null;
         switch (CurrentItem)
@@ -137,7 +137,7 @@ public class PlayerInventory : MonoBehaviour
         BoxCollider2D collider = thrownItem.GetComponent<BoxCollider2D>();
 
         float angle = GetAngleFromPlayerToMouse() * Mathf.Deg2Rad;
-        float throwForce = 800f;
+        float throwForce = 1000f;
         Vector2 spawnPoint = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 
         thrownItem.transform.position = transform.position + new Vector3(spawnPoint.x, spawnPoint.y, 0);
