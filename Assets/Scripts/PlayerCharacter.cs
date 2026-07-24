@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static MasterGameController;
 
 public class PlayerCharacter : MonoBehaviour
 {

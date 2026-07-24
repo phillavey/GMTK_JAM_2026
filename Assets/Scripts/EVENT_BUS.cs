@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum EventType
 {
+    EVENT_STARTED,
     ATTACK,
     THOW_ITEM,
     ENEMY_KILLED,
@@ -43,7 +44,6 @@ public static class EVENT_BUS
         if (eventDictionary.TryGetValue(eventType, out Action thisEvent))
         {
             thisEvent?.Invoke();
-            //Debug.Log($"Event invoked: {eventType}");
         }
     }
 }

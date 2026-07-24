@@ -139,7 +139,6 @@ public class PlayerInventory : MonoBehaviour
         float angle = GetAngleFromPlayerToMouse() * Mathf.Deg2Rad;
         float throwForce = 800f;
         Vector2 spawnPoint = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-        //Debug.Log(spawnPoint);
 
         thrownItem.transform.position = transform.position + new Vector3(spawnPoint.x, spawnPoint.y, 0);
         body.bodyType = RigidbodyType2D.Dynamic;
@@ -151,7 +150,8 @@ public class PlayerInventory : MonoBehaviour
         body.AddForce(spawnPoint * throwForce);
         DropItem(CurrentItem);
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.75f);
+        body.linearVelocity = Vector2.zero;
 
         body.bodyType = RigidbodyType2D.Kinematic;
         collider.isTrigger = true;
