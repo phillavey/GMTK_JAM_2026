@@ -1,8 +1,26 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal.Internal;
 
 public class ToiletTarget : MonoBehaviour, IInteractable
 {
     private bool isClogged = true;
+    private SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+        float sizeScalar = Mathf.Sin(Time.fixedTime * Mathf.PI * 0.5f) * 0.00035f;
+        Vector3 temp = new Vector3(
+            Mathf.Clamp(gameObject.transform.localScale.x + sizeScalar, 1.1f, 2f)
+            , Mathf.Clamp(gameObject.transform.localScale.y + sizeScalar, 1.1f, 2f)
+            , Mathf.Clamp(gameObject.transform.localScale.z + sizeScalar, 1.1f, 2f)
+            );
+        gameObject.transform.localScale = temp;        
+    }
 
     public void Interact(PlayerInventory inventory)
     {

@@ -21,6 +21,7 @@ public class MasterGameController : MonoBehaviour
     [Tooltip("Ghost Prefab for spawning ghosts event.")]
     [SerializeField] private GameObject ghostPrefab;
     [SerializeField] private GameObject bob; /* <- prefab */
+    [SerializeField] private GameObject toiletPrefab;
     [SerializeField] private Light2D globalLight;
 
     private System.Random random;
@@ -57,7 +58,8 @@ public class MasterGameController : MonoBehaviour
         if (Keyboard.current != null && Keyboard.current.tKey.wasPressedThisFrame)
         {
             Debug.Log("SPAWNING TASK");
-            SpawnRandomTask(null);
+            //SpawnRandomTask(null);
+            SpawnTask(GAME_TASK.TOILET_PLUNGING, ROOM.BATHROOM);
         }
     }
 
@@ -85,7 +87,7 @@ public class MasterGameController : MonoBehaviour
                 SpawnGhostbustingTask();
                 break;
             case GAME_TASK.TOILET_PLUNGING:
-                SpawnGhostbustingTask();
+                SpawnToiletPlungingTask();
                 break;
             case GAME_TASK.DISPELLING_DARKNESS:
                 SpawnDispellingDarknessTask();
@@ -162,5 +164,25 @@ public class MasterGameController : MonoBehaviour
         bobington.transform.position = new Vector3(taskSpawnPoint.x, taskSpawnPoint.y, 0);
 
         bobington.SetActive(true);
+    }
+
+    void SpawnToiletPlungingTask()
+    {
+        // Could technically spawn toilet in dup locations, but that's an ok bug I think
+        float toiletSpawnHeight = 28.47f;
+        float toiletSpawnWidthDiff = 4f;
+        float firstToiletX = -101.48f;
+        int numStalls = 24; // Stall 19 isn't valid
+
+        int whichToilet = random.Next(1, numStalls + 1);
+        whichToilet = whichToilet == 19 ? 1 : whichToilet; 
+        float offsetX = firstToiletX + ((whichToilet - 1) * toiletSpawnWidthDiff);
+
+        GameObject toilet = Instantiate(toiletPrefab);
+
+        toilet.transform.position = new Vector3(offsetX, toiletSpawnHeight, 0f);
+        Debug.Log($"Spawning toilet in stall #{whichToilet} at pos {toilet.transform.position.x}");
+        
+        toilet.SetActive(true);
     }
 }
