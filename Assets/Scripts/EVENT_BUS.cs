@@ -19,7 +19,8 @@ public enum EventType
     TIMER_FINISHED,
     TIMER_STARTED,
     TIMER_STOPPED,
-    TASK_COMPLETED
+    TASK_COMPLETED,
+    BOB_FED
 }
 
 public static class EVENT_BUS

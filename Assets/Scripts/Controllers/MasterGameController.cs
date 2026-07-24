@@ -7,18 +7,14 @@ public class MasterGameController : MonoBehaviour
     [Header("Locations")]
     [Tooltip("Where the game should spawn tasks in the living room.")]
     public Vector2 LivingRoomCenter;
-    //[Header("Locations")]
-    //[Tooltip("Where the game should spawn tasks in the living room.")]
-    //public Vector2 BedRoomCenter;
-    //[Header("Locations")]
-    //[Tooltip("Where the game should spawn tasks in the living room.")]
-    //public Vector2 KitchenCenter;
-    //[Header("Locations")]
-    //[Tooltip("Where the game should spawn tasks in the living room.")]
-    //public Vector2 LivingRoomCenter;
-    //[Header("Locations")]
-    //[Tooltip("Where the game should spawn tasks in the living room.")]
-    //public Vector2 LivingRoomCenter;
+    [Tooltip("Where the game should spawn tasks in the bed room.")]
+    public Vector2 BedRoomCenter = new Vector2(-69, -23);
+    [Tooltip("Where the game should spawn tasks in the kitchen.")]
+    public Vector2 KitchenCenter = new Vector2(-88, 7);
+    [Tooltip("Where the game should spawn tasks in the purple room.")]
+    public Vector2 PurpleRoomCenter = new Vector2(-23, -33);
+    [Tooltip("Where the game should spawn tasks in the bath room.")]
+    public Vector2 BathRoomCenter = new Vector2(-57, 27);
 
     [Header("Spawnables")]
     [Tooltip("Ghost Prefab for spawning ghosts event.")]
@@ -43,6 +39,7 @@ public class MasterGameController : MonoBehaviour
         KITCHEN,
         BATHROOM,
         BEDROOM,
+        PURPLE_ROOM
     }
 
     void Awake()
@@ -56,7 +53,7 @@ public class MasterGameController : MonoBehaviour
         if (Keyboard.current != null && Keyboard.current.tKey.wasPressedThisFrame)
         {
             Debug.Log("SPAWNING TASK");
-            SpawnTask(GAME_TASK.GHOSTBUSTING, ROOM.LIVING_ROOM);
+            SpawnRandomTask();
         }
     }
 
@@ -73,6 +70,7 @@ public class MasterGameController : MonoBehaviour
     {
         // EVENT_BUS.Publish(EventType.EVENT_STARTED, task, room);
         // ^ Would be soooo nice
+        Debug.Log($"task: {task} | room: {room}");
         SetTaskSpawnPointForRoom(room);
         switch (task)
         {
@@ -80,12 +78,16 @@ public class MasterGameController : MonoBehaviour
                 SpawnGhostbustingTask();
                 break;
             case GAME_TASK.NUKE_DIFFUSING:
+                SpawnGhostbustingTask();
                 break;
             case GAME_TASK.TOILET_PLUNGING:
+                SpawnGhostbustingTask();
                 break;
             case GAME_TASK.DISPELLING_DARKNESS:
+                SpawnGhostbustingTask();
                 break;
             case GAME_TASK.FEEDING_BOB:
+                SpawnGhostbustingTask();
                 break;
         }
     }
@@ -97,13 +99,27 @@ public class MasterGameController : MonoBehaviour
             case ROOM.LIVING_ROOM:
                 taskSpawnPoint = LivingRoomCenter;
                 break;
+            case ROOM.KITCHEN:
+                taskSpawnPoint = KitchenCenter;
+                break;
+            case ROOM.BATHROOM:
+                taskSpawnPoint = BathRoomCenter;
+                break;
+            case ROOM.BEDROOM:
+                taskSpawnPoint = BedRoomCenter;
+                break;
+            case ROOM.PURPLE_ROOM:
+                taskSpawnPoint = PurpleRoomCenter;
+                break;
+            default:
+                break;
         }
     }
 
     void SpawnGhostbustingTask()
     {
         // Amount of ghosts to spawn can be changed here
-        int numGhosts = 25;
+        int numGhosts = 30;
 
         GameObject[] ghosts = new GameObject[numGhosts];
         float distanceAway;

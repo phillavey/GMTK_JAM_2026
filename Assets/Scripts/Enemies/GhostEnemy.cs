@@ -10,6 +10,7 @@ public class GhostEnemy : MonoBehaviour, IEnemy
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        InvokeRepeating("fixVelocity", 5f, 5f);
     }
 
     // Update is called once per frame
@@ -25,8 +26,23 @@ public class GhostEnemy : MonoBehaviour, IEnemy
 
     public void HitWithWeapon(PlayerInventory.ItemType weapon)
     {
-        // One shot kill
-        EVENT_BUS.Publish(EventType.ENEMY_KILLED, null);
-        Destroy(this.gameObject);
+        if (weapon == PlayerInventory.ItemType.SAGE_STICK)
+        {
+            // One shot kill
+            EVENT_BUS.Publish(EventType.ENEMY_KILLED, null);
+            Destroy(this.gameObject);
+        } else
+        {
+            SFX_Controller.instance.playSFX("whiff", transform, 1f);
+        }
+        
+    }
+
+    void fixVelocity()
+    {
+        // Hacky? YES. It's a game jam
+        Debug.Log("FIXING GHOST VELOCITY");
+        Rigidbody2D body = gameObject.GetComponent<Rigidbody2D>();
+        body.linearVelocity = body.linearVelocity * 0.7f;
     }
 }
