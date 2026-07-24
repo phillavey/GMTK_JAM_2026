@@ -6,15 +6,17 @@ public class PlayerInteractor : MonoBehaviour
 {
     private PlayerInventory inventory;
     private IInteractable currentInteractable;
+    private InputAction throw_;
 
     private void Awake()
     {
         inventory = GetComponent<PlayerInventory>();
+        this.throw_ = InputSystem.actions.FindAction("Throw");
     }
 
     private void Update()
     {
-        if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
+        if (throw_.WasPressedThisFrame())
         {
             if (currentInteractable != null)
             {

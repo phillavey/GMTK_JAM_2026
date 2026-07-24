@@ -26,6 +26,7 @@ public class GhostEnemy : MonoBehaviour, IEnemy
 
     public void HitWithWeapon(PlayerInventory.ItemType weapon)
     {
+        SFX_Controller.instance?.playSFX("whiff", transform, 1f);
         if (weapon == PlayerInventory.ItemType.SAGE_STICK)
         {
             // One shot kill
@@ -33,7 +34,7 @@ public class GhostEnemy : MonoBehaviour, IEnemy
             Destroy(this.gameObject);
         } else
         {
-            SFX_Controller.instance.playSFX("whiff", transform, 1f);
+            // Maybe push them back
         }
         
     }
@@ -41,8 +42,8 @@ public class GhostEnemy : MonoBehaviour, IEnemy
     void fixVelocity()
     {
         // Hacky? YES. It's a game jam
-        Debug.Log("FIXING GHOST VELOCITY");
+        //Debug.Log("FIXING GHOST VELOCITY");
         Rigidbody2D body = gameObject.GetComponent<Rigidbody2D>();
-        body.linearVelocity = body.linearVelocity * 0.7f;
+        body.linearVelocity = body.linearVelocity * 0.6f;
     }
 }

@@ -26,7 +26,7 @@ public class PlayerCharacter : MonoBehaviour
         this.move = InputSystem.actions.FindAction("Move");
         this.throw_ = InputSystem.actions.FindAction("Throw");
 
-        MusicController.instance.PlayMusic("main_theme");
+        MusicController.instance?.PlayMusic("main_theme");
     }
 
     void FixedUpdate()
@@ -56,7 +56,7 @@ public class PlayerCharacter : MonoBehaviour
 
         if (throw_.WasPressedThisFrame())
         {
-            EVENT_BUS.Publish(EventType.THOW_ITEM, null);
+            EVENT_BUS.Publish(EventType.THROW_ITEM, null);
         }
     }
 
