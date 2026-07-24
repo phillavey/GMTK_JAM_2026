@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum EventType
 {
+    REQUEST_MUSIC,
     EVENT_STARTED,
     ATTACK,
     THOW_ITEM,
