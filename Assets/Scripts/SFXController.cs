@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SFXController : MonoBehaviour
@@ -12,7 +13,7 @@ public class SFXController : MonoBehaviour
         EVENT_BUS.Unsubscribe(EventType.ATTACK, HandleAttackSFX);
     }
 
-    void HandleAttackSFX()
+    void HandleAttackSFX(PublishEventArgs args)
     {
         Debug.Log("HandleAttackSFX Fired!!!");
     }

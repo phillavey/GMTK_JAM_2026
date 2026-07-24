@@ -20,7 +20,7 @@ public class ToiletTarget : MonoBehaviour, IInteractable
 
         isClogged = false;
 
-        EVENT_BUS.Publish(EventType.TOILET_UNCLOGGED);
+        EVENT_BUS.Publish(EventType.TOILET_UNCLOGGED, null);
 
         Debug.Log("You unclogged the toilet!");
 

@@ -88,7 +88,7 @@ public class PlayerInventory : MonoBehaviour
         return Mathf.Atan2(mousePos.y - transform.parent.position.y, mousePos.x - transform.parent.position.x) * Mathf.Rad2Deg;
     }
 
-    private void Attack()
+    private void Attack(PublishEventArgs args)
     {
         switch (CurrentItem)
         {
