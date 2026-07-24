@@ -122,6 +122,8 @@ public class PlayerInventory : MonoBehaviour
     {
         swinging = true;
         Debug.Log("ATTACKED!!!");
+        float angle = GetAngleFromPlayerToMouse();
+        transform.localEulerAngles = new Vector3(0, 0, angle - 135);
         playerAnimator.enabled = true;
         playerAnimator.SetTrigger("player_swing");
         yield return new WaitForSeconds(1f);
