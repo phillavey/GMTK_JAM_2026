@@ -46,7 +46,7 @@ public class PlayerCharacter : MonoBehaviour
         rigidbody.linearVelocity = new Vector2(horizontal * horizontalMoveSpeed, vertical * verticalMoveSpeed);
 
         if (attack.WasPressedThisFrame()) {
-            EVENT_BUS.Publish(EventType.ATTACK);
+            EVENT_BUS.Publish(EventType.ATTACK, null);
         }
     }
 

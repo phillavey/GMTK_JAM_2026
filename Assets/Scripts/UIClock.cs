@@ -8,10 +8,8 @@ public class UIClock : MonoBehaviour
 
     void OnEnable()
     {
-        // 1. Get the UIDocument component attached to this GameObject
         var uiDocument = GetComponent<UIDocument>();
 
-        // 2. Find the Label inside the UI document by its name in the UXML
         timerLabel = uiDocument.rootVisualElement.Q<Label>("TimerLabel");
     }
 

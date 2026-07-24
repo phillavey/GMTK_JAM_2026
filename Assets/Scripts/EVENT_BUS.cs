@@ -21,9 +21,9 @@ public enum EventType
 
 public static class EVENT_BUS
 {
-    private static readonly Dictionary<EventType, Action> eventDictionary = new Dictionary<EventType, Action>();
+    private static readonly Dictionary<EventType, Action<PublishEventArgs>> eventDictionary = new Dictionary<EventType, Action<PublishEventArgs>>();
 
-    public static void Subscribe(EventType eventType, Action listener)
+    public static void Subscribe(EventType eventType, Action<PublishEventArgs> listener)
     {
         if (!eventDictionary.ContainsKey(eventType))
         {
@@ -33,7 +33,7 @@ public static class EVENT_BUS
         eventDictionary[eventType] += listener;
     }
 
-    public static void Unsubscribe(EventType eventType, Action listener)
+    public static void Unsubscribe(EventType eventType, Action<PublishEventArgs> listener)
     {
         if (eventDictionary.ContainsKey(eventType))
         {
@@ -41,12 +41,20 @@ public static class EVENT_BUS
         }
     }
 
-    public static void Publish(EventType eventType)
+    public static void Publish(EventType eventType, PublishEventArgs args)
     {
-        if (eventDictionary.TryGetValue(eventType, out Action thisEvent))
+        if (eventDictionary.TryGetValue(eventType, out Action<PublishEventArgs> thisEvent))
         {
-            thisEvent?.Invoke();
+            thisEvent?.Invoke(args);
             //Debug.Log($"Event invoked: {eventType}");
         }
     }
+}
+
+public record PublishEventArgs(Dictionary<string, object> Data);
+
+namespace System.Runtime.CompilerServices
+{
+    // Dummy class to enable modern C# record features on older frameworks
+    internal static class IsExternalInit { }
 }
