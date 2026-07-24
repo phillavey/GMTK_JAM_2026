@@ -5,7 +5,7 @@ public class MainCamera : MonoBehaviour
     public Rigidbody2D pc;
     public int DistanceAway = 50;
     public float minimumY = 0;
-    private float smoothTime = 0.15f;
+    private float smoothTime = 0.075f;
     private Vector3 cameraVelocity = Vector3.zero;
     [SerializeField] private float offsetY = 0f;
 

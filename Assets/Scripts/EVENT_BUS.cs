@@ -4,7 +4,9 @@ using UnityEngine;
 
 public enum EventType
 {
+    EVENT_STARTED,
     ATTACK,
+    THOW_ITEM,
     ENEMY_KILLED,
     PLAYER_HURT,
     TOILET_UNCLOGGED,
