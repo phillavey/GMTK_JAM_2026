@@ -5,6 +5,8 @@ using static MasterGameController;
 
 public class ToiletTarget : MonoBehaviour, IEnemy
 {
+    // Room this spawned toilet belongs to (set by spawner)
+    public ROOM taskRoom;
     private void Update()
     {
         float sizeScalar = Mathf.Sin(Time.fixedTime * Mathf.PI * 0.5f) * 0.00035f;

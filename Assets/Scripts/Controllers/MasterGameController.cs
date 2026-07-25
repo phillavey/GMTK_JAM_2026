@@ -31,6 +31,8 @@ public class MasterGameController : MonoBehaviour
     private Vector2 taskSpawnPoint;
 
     private static int TASK_ID = 0;
+    // Track active spawned task enemies by key "TASK_ROOM" -> count
+    private System.Collections.Generic.Dictionary<string, int> activeTaskCounts = new System.Collections.Generic.Dictionary<string, int>();
 
     public enum GAME_TASK
     {
@@ -44,7 +46,7 @@ public class MasterGameController : MonoBehaviour
 
     public enum ROOM
     {
-        SEANCE_ROOM,
+        //SEANCE_ROOM,
         LIVING_ROOM,
         KITCHEN,
         BATHROOM,
@@ -57,6 +59,42 @@ public class MasterGameController : MonoBehaviour
         taskSpawnPoint = Vector2.zero;
         random = new System.Random();
         EVENT_BUS.Subscribe(EventType.EVENT_STARTED, SpawnRandomTask);
+        EVENT_BUS.Subscribe(EventType.ENEMY_KILLED, OnEnemyKilled);
+    }
+
+    private string CountKey(GAME_TASK task, ROOM room) => $"{task}_{room}";
+
+    private void IncrementSpawnedCount(GAME_TASK task, ROOM room, int amount)
+    {
+        string key = CountKey(task, room);
+        if (activeTaskCounts.ContainsKey(key)) activeTaskCounts[key] += amount;
+        else activeTaskCounts[key] = amount;
+    }
+
+    private void OnEnemyKilled(PublishEventArgs args)
+    {
+        if (args == null || args.Data == null) return;
+        args.Data.TryGetValue("task_name", out object taskObj);
+        args.Data.TryGetValue("task_room", out object roomObj);
+        if (taskObj == null || roomObj == null) return;
+
+        if (taskObj is GAME_TASK task && roomObj is ROOM room)
+        {
+            string key = CountKey(task, room);
+            if (!activeTaskCounts.ContainsKey(key)) return;
+            activeTaskCounts[key] -= 1;
+            if (activeTaskCounts[key] <= 0)
+            {
+                activeTaskCounts.Remove(key);
+                // Publish TASK_COMPLETED for this task/room
+                var eventArgs = new System.Collections.Generic.Dictionary<string, object>()
+                {
+                    { "task_name", task },
+                    { "task_room", room }
+                };
+                EVENT_BUS.Publish(EventType.TASK_COMPLETED, new PublishEventArgs(eventArgs));
+            }
+        }
     }
 
     void Update()
@@ -65,7 +103,7 @@ public class MasterGameController : MonoBehaviour
         {
             Debug.Log("SPAWNING TASK");
             //SpawnRandomTask(null);
-            SpawnTask(GAME_TASK.FEEDING_BOB, ROOM.BATHROOM);
+            SpawnTask(GAME_TASK.NUKE_DIFFUSING, ROOM.LIVING_ROOM);
         }
     }
 
@@ -80,33 +118,47 @@ public class MasterGameController : MonoBehaviour
 
     void SpawnTask(GAME_TASK task, ROOM room)
     {
-        Dictionary<string, object> eventArgs = new Dictionary<string, object>()
+        // For some tasks (like the nuke) we don't expose the room in the UI
+        Dictionary<string, object> eventArgs;
+        if (task == GAME_TASK.NUKE_DIFFUSING || task == GAME_TASK.TOILET_PLUNGING)
         {
-            { "task_name", task },
-            { "task_id", TASK_ID++ }
-        };
+            eventArgs = new Dictionary<string, object>()
+            {
+                { "task_name", task },
+                { "task_id", TASK_ID++ }
+            };
+        }
+        else
+        {
+            eventArgs = new Dictionary<string, object>()
+            {
+                { "task_name", task },
+                { "task_id", TASK_ID++ },
+                { "task_room", room }
+            };
+        }
         EVENT_BUS.Publish(EventType.NOTIFY_UI_EVENT_STARTED, new PublishEventArgs(eventArgs));
-        
+
         SetTaskSpawnPointForRoom(room);
         switch (task)
         {
             case GAME_TASK.GHOSTBUSTING:
-                SpawnGhostbustingTask();
+                SpawnGhostbustingTask(room);
                 break;
             case GAME_TASK.NUKE_DIFFUSING:
                 EVENT_BUS.Publish(EventType.NUKEING_IS_NOW_LEGAL, null);
                 break;
             case GAME_TASK.TOILET_PLUNGING:
-                SpawnToiletPlungingTask();
+                SpawnToiletPlungingTask(room);
                 break;
             //case GAME_TASK.DISPELLING_DARKNESS:
             //    SpawnDispellingDarknessTask();
             //    break;
             case GAME_TASK.FEEDING_BOB:
-                SpawnFeedBobTask();
+                SpawnFeedBobTask(room);
                 break;
             case GAME_TASK.BUBBLE_POPPING:
-                SpawnBubblePoppingTask();
+                SpawnBubblePoppingTask(room);
                 break;
         }
         Debug.LogWarning($"SPAWNED TASK {task} IN ROOM {room}!");
@@ -137,7 +189,7 @@ public class MasterGameController : MonoBehaviour
         }
     }
 
-    void SpawnGhostbustingTask()
+    void SpawnGhostbustingTask(ROOM room)
     {
         // Amount of bubbles to spawn can be changed here
         int numGhosts = 30;
@@ -148,6 +200,8 @@ public class MasterGameController : MonoBehaviour
         {
             distanceAway = (float) random.NextDouble() * 10;
             GameObject ghost = Instantiate(ghostPrefab);
+            GhostEnemy ge = ghost.GetComponent<GhostEnemy>();
+            if (ge != null) ge.taskRoom = room;
             ghost.transform.position = new Vector3(
                 ((float) (random.NextDouble() * 3 - 1.5f) * distanceAway) + taskSpawnPoint.x,
                 ((float) (random.NextDouble() * 3 - 1.5f) * distanceAway) + taskSpawnPoint.y,
@@ -161,11 +215,13 @@ public class MasterGameController : MonoBehaviour
         {
             ghost.SetActive(true);
         }
+        // Track how many ghosts we spawned for this task/room so we can notify UI when they're all dead
+        IncrementSpawnedCount(GAME_TASK.GHOSTBUSTING, room, numGhosts);
     }
 
-    void SpawnBubblePoppingTask()
+    void SpawnBubblePoppingTask(ROOM room)
     {
-        int numBubbles = 5;
+        int numBubbles = 1;
 
         GameObject[] bubbles = new GameObject[numBubbles];
         float distanceAway;
@@ -173,6 +229,8 @@ public class MasterGameController : MonoBehaviour
         {
             distanceAway = (float)random.NextDouble() * 2;
             GameObject bubble = Instantiate(bubblePrefab);
+            DirtyBubble db = bubble.GetComponent<DirtyBubble>();
+            if (db != null) db.taskRoom = room;
             bubble.transform.position = new Vector3(
                 ((float)(random.NextDouble() * 3 - 1.5f) * distanceAway) + taskSpawnPoint.x,
                 ((float)(random.NextDouble() * 3 - 1.5f) * distanceAway) + taskSpawnPoint.y,
@@ -186,6 +244,8 @@ public class MasterGameController : MonoBehaviour
         {
             bubble.SetActive(true);
         }
+        // Track bubble count for UI completion
+        IncrementSpawnedCount(GAME_TASK.BUBBLE_POPPING, room, numBubbles);
     }
 
     void SpawnDispellingDarknessTask()
@@ -196,16 +256,18 @@ public class MasterGameController : MonoBehaviour
         }
     }
 
-    void SpawnFeedBobTask()
+    void SpawnFeedBobTask(ROOM room)
     {
         GameObject bobington = Instantiate(bob);
+        Bob bComp = bobington.GetComponent<Bob>();
+        if (bComp != null) bComp.taskRoom = room;
 
         bobington.transform.position = new Vector3(taskSpawnPoint.x, taskSpawnPoint.y, 0);
 
         bobington.SetActive(true);
     }
 
-    void SpawnToiletPlungingTask()
+    void SpawnToiletPlungingTask(ROOM room)
     {
         // Could technically spawn toilet in dup locations, but that's an ok bug I think
         float toiletSpawnHeight = 28.47f;
@@ -218,6 +280,8 @@ public class MasterGameController : MonoBehaviour
         float offsetX = firstToiletX + ((whichToilet - 1) * toiletSpawnWidthDiff);
 
         GameObject toilet = Instantiate(toiletPrefab);
+        ToiletTarget tt = toilet.GetComponent<ToiletTarget>();
+        if (tt != null) tt.taskRoom = room;
 
         toilet.transform.position = new Vector3(offsetX, toiletSpawnHeight, 0f);
         Debug.Log($"Spawning toilet in stall #{whichToilet} at pos {toilet.transform.position.x}");

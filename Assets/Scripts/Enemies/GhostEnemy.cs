@@ -1,7 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
+using static MasterGameController;
 
 public class GhostEnemy : MonoBehaviour, IEnemy
 {
+    public ROOM taskRoom;
     [SerializeField] private GameObject playerCharacter;
     private SpriteRenderer spriteRenderer;
 
@@ -30,7 +33,12 @@ public class GhostEnemy : MonoBehaviour, IEnemy
         if (weapon == PlayerInventory.ItemType.SAGE_STICK)
         {
             // One shot kill
-            EVENT_BUS.Publish(EventType.ENEMY_KILLED, null);
+            Dictionary<string, object> eventArgs = new()
+            {
+                { "task_name", GAME_TASK.GHOSTBUSTING },
+                { "task_room", taskRoom }
+            };
+            EVENT_BUS.Publish(EventType.ENEMY_KILLED, new PublishEventArgs(eventArgs));
             Destroy(this.gameObject);
         } else
         {
