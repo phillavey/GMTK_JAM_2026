@@ -8,7 +8,7 @@ public class GlobalTimer : MonoBehaviour
     public bool IsTimerRunning { get; private set; }
     public bool IsNukeTimerRunning { get; private set; }
 
-    private float spellCastTimeIncreaseAmount = 15f;
+    private float spellCastTimeIncreaseAmount = 30f;
     private float SpawnTimer = 30f;
     private float nukeTimer = 60f;
 
