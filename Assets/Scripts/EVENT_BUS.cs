@@ -6,6 +6,7 @@ public enum EventType
 {
     REQUEST_MUSIC,
     EVENT_STARTED,
+    NOTIFY_UI_EVENT_STARTED, // Embrace the spaghett
     ATTACK,
     THROW_ITEM,
     ENEMY_KILLED,

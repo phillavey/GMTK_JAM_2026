@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using static MasterGameController;
 public class MrNuke : MonoBehaviour, IEnemy
 {
     public bool isAngry;
@@ -25,7 +25,12 @@ public class MrNuke : MonoBehaviour, IEnemy
             // One shot kill
             Debug.Log("NUKE DEFUSED");
             EVENT_BUS.Publish(EventType.NUKE_DEFUSED, null);
-            EVENT_BUS.Publish(EventType.TASK_COMPLETED, null);
+
+            Dictionary<string, object> eventArgs = new()
+            {
+                { "task_name", GAME_TASK.NUKE_DIFFUSING }
+            };
+            EVENT_BUS.Publish(EventType.TASK_COMPLETED, new PublishEventArgs(eventArgs));
             isAngry = false;
         }
         else

@@ -1,3 +1,4 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Label text="Timer:Placeholder" name="TimerLabel" style="-unity-text-align: middle-center; border-top-color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); height: 27px; width: 172px; position: absolute; top: 27px; left: 639px; -unity-font-style: bold; -unity-text-outline-width: 1px; color: rgb(0, 0, 0); font-size: 18px;"/>
+    <ui:Label text="Timer:Placeholder" name="TimerLabel" style="-unity-text-align: middle-center; border-top-color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); height: 27px; width: 172px; position: absolute; top: 122px; left: 744px; -unity-font-style: bold; -unity-text-outline-width: 1px; color: rgb(0, 0, 0); font-size: 18px;"/>
+    <ui:VisualElement name="TaskListContainer" style="flex-grow: 1; position: absolute; height: 482px; width: 369px; top: 220px; left: 253px;"/>
 </ui:UXML>

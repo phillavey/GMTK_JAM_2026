@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal.Internal;
+using static MasterGameController;
 
 public class ToiletTarget : MonoBehaviour, IEnemy
 {
@@ -21,7 +23,11 @@ public class ToiletTarget : MonoBehaviour, IEnemy
         {
             // One shot kill
             EVENT_BUS.Publish(EventType.ENEMY_KILLED, null);
-            EVENT_BUS.Publish(EventType.TASK_COMPLETED, null);
+            Dictionary<string, object> eventArgs = new()
+            {
+                { "task_name", GAME_TASK.TOILET_PLUNGING }
+            };
+            EVENT_BUS.Publish(EventType.TASK_COMPLETED, new PublishEventArgs(eventArgs));
             Destroy(this.gameObject);
         }
         else

@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
@@ -18,7 +21,6 @@ public class MasterGameController : MonoBehaviour
     public Vector2 BathRoomCenter = new Vector2(-57, 27);
 
     [Header("Spawnables")]
-    [Tooltip("Ghost Prefab for spawning bubbles event.")]
     [SerializeField] private GameObject ghostPrefab;
     [SerializeField] private GameObject bubblePrefab;
     [SerializeField] private GameObject bob; /* <- prefab */
@@ -28,12 +30,14 @@ public class MasterGameController : MonoBehaviour
     private System.Random random;
     private Vector2 taskSpawnPoint;
 
+    private static int TASK_ID = 0;
+
     public enum GAME_TASK
     {
         GHOSTBUSTING,
         NUKE_DIFFUSING,
         TOILET_PLUNGING,
-        DISPELLING_DARKNESS,
+        //DISPELLING_DARKNESS,
         FEEDING_BOB,
         BUBBLE_POPPING,
     }
@@ -61,7 +65,7 @@ public class MasterGameController : MonoBehaviour
         {
             Debug.Log("SPAWNING TASK");
             //SpawnRandomTask(null);
-            SpawnTask(GAME_TASK.BUBBLE_POPPING, ROOM.BATHROOM);
+            SpawnTask(GAME_TASK.FEEDING_BOB, ROOM.BATHROOM);
         }
     }
 
@@ -76,9 +80,13 @@ public class MasterGameController : MonoBehaviour
 
     void SpawnTask(GAME_TASK task, ROOM room)
     {
-        // EVENT_BUS.Publish(EventType.EVENT_STARTED, task, room);
-        // ^ Would be soooo nice
-        Debug.LogWarning($"SPAWNED TASK {task} IN ROOM {room}!");
+        Dictionary<string, object> eventArgs = new Dictionary<string, object>()
+        {
+            { "task_name", task },
+            { "task_id", TASK_ID++ }
+        };
+        EVENT_BUS.Publish(EventType.NOTIFY_UI_EVENT_STARTED, new PublishEventArgs(eventArgs));
+        
         SetTaskSpawnPointForRoom(room);
         switch (task)
         {
@@ -91,9 +99,9 @@ public class MasterGameController : MonoBehaviour
             case GAME_TASK.TOILET_PLUNGING:
                 SpawnToiletPlungingTask();
                 break;
-            case GAME_TASK.DISPELLING_DARKNESS:
-                SpawnDispellingDarknessTask();
-                break;
+            //case GAME_TASK.DISPELLING_DARKNESS:
+            //    SpawnDispellingDarknessTask();
+            //    break;
             case GAME_TASK.FEEDING_BOB:
                 SpawnFeedBobTask();
                 break;
@@ -101,6 +109,7 @@ public class MasterGameController : MonoBehaviour
                 SpawnBubblePoppingTask();
                 break;
         }
+        Debug.LogWarning($"SPAWNED TASK {task} IN ROOM {room}!");
     }
 
     void SetTaskSpawnPointForRoom(ROOM room)

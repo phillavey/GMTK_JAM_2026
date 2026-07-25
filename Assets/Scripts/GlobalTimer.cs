@@ -45,7 +45,11 @@ public class GlobalTimer : MonoBehaviour
 
         TimeRemaining -= Time.deltaTime;
         SpawnTimer -= Time.deltaTime;
-        nukeTimer -= Time.deltaTime;
+
+        if (IsNukeTimerRunning)
+        {
+            nukeTimer -= Time.deltaTime;
+        }
 
         if (SpawnTimer <= 0)
         {
