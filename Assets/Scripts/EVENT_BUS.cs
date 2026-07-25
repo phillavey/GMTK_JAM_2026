@@ -24,6 +24,7 @@ public enum EventType
     LANTERN_DROPPED,
     BOB_FED,
     SPELL_CAST_SUCCESS,
+    NUKEING_IS_NOW_LEGAL,
 }
 
 public static class EVENT_BUS

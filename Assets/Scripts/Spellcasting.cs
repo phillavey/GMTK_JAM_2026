@@ -41,7 +41,6 @@ public class Spellcasting : MonoBehaviour
 
     private void DoSpellCasting()
     {
-        Debug.Log("Casting a spell!");
         // Play a sound
         // Do a little animation or screen shake
         focusMeter--;

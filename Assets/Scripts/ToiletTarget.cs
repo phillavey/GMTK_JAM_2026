@@ -3,14 +3,6 @@ using UnityEngine.Rendering.Universal.Internal;
 
 public class ToiletTarget : MonoBehaviour, IEnemy
 {
-    private bool isClogged = true;
-    private SpriteRenderer spriteRenderer;
-
-    private void Awake()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
     private void Update()
     {
         float sizeScalar = Mathf.Sin(Time.fixedTime * Mathf.PI * 0.5f) * 0.00035f;

@@ -14,6 +14,7 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private Sprite sageStickSprite;
     [SerializeField] private Sprite foodSprite;
     [SerializeField] private Sprite lanternSprite;
+    [SerializeField] private Sprite scissorsSprite;
     [SerializeField] private Animator playerAnimator;
 
     [Header("Prefabs to spawn when thrown")]
@@ -21,6 +22,7 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private GameObject lanternPrefab;
     [SerializeField] private GameObject foodPrefab;
     [SerializeField] private GameObject plungerPrefab;
+    [SerializeField] private GameObject scissorsPrefab;
 
     [SerializeField] private Collider2D spellCastingAreaCollider;
 
@@ -36,6 +38,7 @@ public class PlayerInventory : MonoBehaviour
         SAGE_STICK,
         LANTERN,
         FOOD,
+        SCISSORS,
     }
 
     public ItemType CurrentItem { get; private set; } = ItemType.NONE;
@@ -62,14 +65,12 @@ public class PlayerInventory : MonoBehaviour
     {
         CurrentItem = item;
         SetItemSprite(item);
-        Debug.Log($"Picked up: {item}");
     }
 
     public void DropItem(ItemType item)
     {
         CurrentItem = ItemType.NONE;
         SetItemSprite(ItemType.NONE);
-        Debug.Log($"Dropped: {item}");
     }
 
     public void SetItemSprite(ItemType item)
@@ -90,6 +91,9 @@ public class PlayerInventory : MonoBehaviour
                 break;
             case ItemType.FOOD:
                 itemRenderer.sprite = foodSprite;
+                break;
+            case ItemType.SCISSORS:
+                itemRenderer.sprite = scissorsSprite;
                 break;
         }        
     }
@@ -126,7 +130,6 @@ public class PlayerInventory : MonoBehaviour
     IEnumerator DoSwingAnimation()
     {
         swinging = true;
-        Debug.Log("ATTACKED!!!");
         float angle = GetAngleFromPlayerToMouse();
         transform.localEulerAngles = new Vector3(0, 0, angle - 135);
         playerAnimator.enabled = true;
@@ -156,6 +159,10 @@ public class PlayerInventory : MonoBehaviour
                 break;
             case ItemType.PLUNGER:
                 thrownItem = Instantiate(plungerPrefab);
+                StartCoroutine(throwItem(thrownItem));
+                break;
+            case ItemType.SCISSORS:
+                thrownItem = Instantiate(scissorsPrefab);
                 StartCoroutine(throwItem(thrownItem));
                 break;
             case ItemType.NONE:

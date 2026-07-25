@@ -6,14 +6,17 @@ public class GlobalTimer : MonoBehaviour
 
     public float TimeRemaining { get; set; }
     public bool IsTimerRunning { get; private set; }
+    public bool IsNukeTimerRunning { get; private set; }
 
     private float spellCastTimeIncreaseAmount = 15f;
-
     private float SpawnTimer = 30f;
+    private float nukeTimer = 60f;
 
     void OnEnable()
     {
-        EVENT_BUS.Subscribe(EventType.SPELL_CAST_SUCCESS, IncreaseTime);
+        EVENT_BUS.Subscribe(EventType.SPELL_CAST_SUCCESS, IncreaseTimeRemaining);
+        EVENT_BUS.Subscribe(EventType.NUKEING_IS_NOW_LEGAL, StartNukeTimer);
+        EVENT_BUS.Subscribe(EventType.NUKE_DEFUSED, StopNukeTimer);
     }
 
     void Awake()
@@ -31,11 +34,6 @@ public class GlobalTimer : MonoBehaviour
         TimeRemaining = 300f; // Set to 5 minutes (300 seconds)
         StartTimer();
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -47,6 +45,7 @@ public class GlobalTimer : MonoBehaviour
 
         TimeRemaining -= Time.deltaTime;
         SpawnTimer -= Time.deltaTime;
+        nukeTimer -= Time.deltaTime;
 
         if (SpawnTimer <= 0)
         {
@@ -56,8 +55,16 @@ public class GlobalTimer : MonoBehaviour
 
         if (TimeRemaining <= 0)
         {
+            // Game over
             TimeRemaining = 0;
             IsTimerRunning = false;
+            EVENT_BUS.Publish(EventType.TIMER_FINISHED, null);
+        }
+
+        if (nukeTimer <= 0)
+        {
+            // Game over
+            Debug.Log("NUKE SET OFF");
             EVENT_BUS.Publish(EventType.TIMER_FINISHED, null);
         }
     }
@@ -74,9 +81,24 @@ public class GlobalTimer : MonoBehaviour
         IsTimerRunning = false;
     }
 
-    void IncreaseTime(PublishEventArgs args)
+    void IncreaseTimeRemaining(PublishEventArgs args)
     {
         Debug.LogWarning("TIME INCREASED");
         TimeRemaining += spellCastTimeIncreaseAmount;
+    }
+
+    void StartNukeTimer(PublishEventArgs args)
+    {
+        if (!IsNukeTimerRunning)
+        {
+            nukeTimer = 60f;
+            IsNukeTimerRunning = true;
+        }
+    }
+
+    void StopNukeTimer(PublishEventArgs args)
+    {
+        IsNukeTimerRunning = false;
+        nukeTimer = 60f;
     }
 }

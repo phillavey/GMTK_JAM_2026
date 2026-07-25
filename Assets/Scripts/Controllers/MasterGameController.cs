@@ -59,7 +59,7 @@ public class MasterGameController : MonoBehaviour
         {
             Debug.Log("SPAWNING TASK");
             //SpawnRandomTask(null);
-            SpawnTask(GAME_TASK.TOILET_PLUNGING, ROOM.BATHROOM);
+            SpawnTask(GAME_TASK.NUKE_DIFFUSING, ROOM.BATHROOM);
         }
     }
 
@@ -84,7 +84,7 @@ public class MasterGameController : MonoBehaviour
                 SpawnGhostbustingTask();
                 break;
             case GAME_TASK.NUKE_DIFFUSING:
-                SpawnGhostbustingTask();
+                EVENT_BUS.Publish(EventType.NUKEING_IS_NOW_LEGAL, null);
                 break;
             case GAME_TASK.TOILET_PLUNGING:
                 SpawnToiletPlungingTask();

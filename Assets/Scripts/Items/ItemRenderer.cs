@@ -20,6 +20,7 @@ public class ItemRenderer : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //Debug.LogError($"ENTERED COLLISION {collision}");
         IEnemy enemy = collision.GetComponent<IEnemy>();
         if (enemy != null && playerInventory.swinging)
         {
