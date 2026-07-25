@@ -21,7 +21,7 @@ public class UITasklist : MonoBehaviour
 
     private Dictionary<object, string> roomToUIFriendlyName = new Dictionary<object, string>
     {
-        //{ ROOM.SEANCE_ROOM, "Seance Room" },
+        { ROOM.SEANCE_ROOM, "Seance Room" },
         { ROOM.LIVING_ROOM, "Living Room" },
         { ROOM.KITCHEN, "Kitchen" },
         { ROOM.BATHROOM, "Bathroom" },

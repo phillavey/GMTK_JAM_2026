@@ -6,12 +6,6 @@ public class OOB : MonoBehaviour
     {
         Debug.Log(collision.gameObject);
         GameObject obj = collision.gameObject;
-        //TryGetComponent<Rigidbody2D>(out Rigidbody2D rb);
-        //if (rb != null)
-        //{
-        //    rb.linearVelocity = Vector3.zero;
-        //    rb.
-        //}
         obj.SetActive(false);
         obj.transform.position = new Vector3(-50, -8, 0);
         obj.SetActive(true);
