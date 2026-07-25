@@ -12,13 +12,15 @@ public class MasterGameController : MonoBehaviour
     [Tooltip("Where the game should spawn tasks in the living room.")]
     public Vector2 LivingRoomCenter;
     [Tooltip("Where the game should spawn tasks in the bed room.")]
-    public Vector2 BedRoomCenter = new Vector2(-69, -23);
+    public Vector2 BedRoomCenter;
     [Tooltip("Where the game should spawn tasks in the kitchen.")]
-    public Vector2 KitchenCenter = new Vector2(-88, 7);
+    public Vector2 KitchenCenter;
     [Tooltip("Where the game should spawn tasks in the purple room.")]
-    public Vector2 PurpleRoomCenter = new Vector2(-23, -33);
+    public Vector2 PurpleRoomCenter;
     [Tooltip("Where the game should spawn tasks in the bath room.")]
-    public Vector2 BathRoomCenter = new Vector2(-57, 27);
+    public Vector2 BathRoomCenter;
+    [Tooltip("Where the game should spawn tasks in the bath room.")]
+    public Vector2 SeanceRoomCenter;
 
     [Header("Spawnables")]
     [SerializeField] private GameObject ghostPrefab;
@@ -46,7 +48,7 @@ public class MasterGameController : MonoBehaviour
 
     public enum ROOM
     {
-        //SEANCE_ROOM,
+        SEANCE_ROOM,
         LIVING_ROOM,
         KITCHEN,
         BATHROOM,
@@ -102,8 +104,8 @@ public class MasterGameController : MonoBehaviour
         if (Keyboard.current != null && Keyboard.current.tKey.wasPressedThisFrame)
         {
             Debug.Log("SPAWNING TASK");
-            //SpawnRandomTask(null);
-            SpawnTask(GAME_TASK.NUKE_DIFFUSING, ROOM.LIVING_ROOM);
+            SpawnRandomTask(null);
+            //SpawnTask(GAME_TASK.NUKE_DIFFUSING, ROOM.LIVING_ROOM);
         }
     }
 
@@ -182,6 +184,9 @@ public class MasterGameController : MonoBehaviour
                 break;
             case ROOM.PURPLE_ROOM:
                 taskSpawnPoint = PurpleRoomCenter;
+                break;
+            case ROOM.SEANCE_ROOM:
+                taskSpawnPoint = SeanceRoomCenter;
                 break;
             default:
                 taskSpawnPoint = LivingRoomCenter;

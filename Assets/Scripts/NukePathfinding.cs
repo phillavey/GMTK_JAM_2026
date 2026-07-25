@@ -18,6 +18,8 @@ public class NukePathfinding : MonoBehaviour
     [Tooltip("Time in seconds to wait at a wander point before picking a new one.")]
     [SerializeField] private float wanderWaitTime = 2f;
 
+    //Collider2D collider;
+
     private NavMeshAgent agent;
     private float wanderTimer;
 
@@ -28,6 +30,7 @@ public class NukePathfinding : MonoBehaviour
         agent.updateUpAxis = false;
 
         wanderTimer = wanderWaitTime;
+        //collider = GetComponent<Collider2D>();
     }
 
     void Update()
@@ -35,6 +38,10 @@ public class NukePathfinding : MonoBehaviour
         if (!agent.isActiveAndEnabled || !agent.isOnNavMesh || playerTarget == null)
             return;
 
+        //if (collider.)
+        //{
+
+        //}
         WanderAimlessly();
     }
 
@@ -87,5 +94,10 @@ public class NukePathfinding : MonoBehaviour
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, wanderRadius);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        WanderAimlessly();
     }
 }
