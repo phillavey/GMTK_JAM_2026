@@ -3,6 +3,7 @@ using UnityEngine;
 public class Spellcasting : MonoBehaviour
 {
     public static int spellFocusRequired = 25;
+    [SerializeField] private static int manaIncreaseAmount = 5;
     private int spellProgress;
     public int focusMeter;
 
@@ -10,9 +11,17 @@ public class Spellcasting : MonoBehaviour
 
     private void Awake()
     {
+        EVENT_BUS.Subscribe(EventType.TASK_COMPLETED, IncreaseMana);
+
         playerInventory = GetComponent<PlayerInventory>();
         spellProgress = spellFocusRequired;
-        focusMeter = 25;
+        focusMeter = 0;
+    }
+
+    void IncreaseMana(PublishEventArgs args)
+    {
+        Debug.Log("MANA INCREASED!!!!!!");
+        focusMeter += manaIncreaseAmount;
     }
 
     public void TrySpellCasting()

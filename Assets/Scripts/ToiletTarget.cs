@@ -29,6 +29,7 @@ public class ToiletTarget : MonoBehaviour, IEnemy
         {
             // One shot kill
             EVENT_BUS.Publish(EventType.ENEMY_KILLED, null);
+            EVENT_BUS.Publish(EventType.TASK_COMPLETED, null);
             Destroy(this.gameObject);
         }
         else
