@@ -7,13 +7,13 @@ public class GlobalTimer : MonoBehaviour
     public float TimeRemaining { get; set; }
     public bool IsTimerRunning { get; private set; }
 
-    private float TaskCompletionIncreaseAmount = 15f;
+    private float spellCastTimeIncreaseAmount = 15f;
 
     private float SpawnTimer = 30f;
 
     void OnEnable()
     {
-        EVENT_BUS.Subscribe(EventType.TASK_COMPLETED, IncreaseTime);
+        EVENT_BUS.Subscribe(EventType.SPELL_CAST_SUCCESS, IncreaseTime);
     }
 
     void Awake()
@@ -76,6 +76,7 @@ public class GlobalTimer : MonoBehaviour
 
     void IncreaseTime(PublishEventArgs args)
     {
-        TimeRemaining += TaskCompletionIncreaseAmount;
+        Debug.LogWarning("TIME INCREASED");
+        TimeRemaining += spellCastTimeIncreaseAmount;
     }
 }

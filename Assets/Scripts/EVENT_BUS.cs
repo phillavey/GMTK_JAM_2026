@@ -22,7 +22,8 @@ public enum EventType
     TASK_COMPLETED,
     LANTERN_PICKED_UP,
     LANTERN_DROPPED,
-    BOB_FED
+    BOB_FED,
+    SPELL_CAST_SUCCESS,
 }
 
 public static class EVENT_BUS

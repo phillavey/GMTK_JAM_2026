@@ -18,6 +18,8 @@ public class PlayerCharacter : MonoBehaviour
     private InputAction attack;
     private InputAction throw_;
     private InputAction move;
+    //private InputAction sprint;
+    //private float sprintCounter;
     private Vector2 moveValue;
 
     void Start()
@@ -25,6 +27,7 @@ public class PlayerCharacter : MonoBehaviour
         this.attack = InputSystem.actions.FindAction("Attack");
         this.move = InputSystem.actions.FindAction("Move");
         this.throw_ = InputSystem.actions.FindAction("Throw");
+        //this.sprint = InputSystem.actions.FindAction("Sprint");
 
         MusicController.instance?.PlayMusic("main_theme");
     }

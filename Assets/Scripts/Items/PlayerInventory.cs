@@ -9,15 +9,23 @@ public class PlayerInventory : MonoBehaviour
     private Camera mainCamera;
 
     [SerializeField] private SpriteRenderer itemRenderer;
+    [Header("Held Item Sprites")]
     [SerializeField] private Sprite plungerSprite;
     [SerializeField] private Sprite sageStickSprite;
     [SerializeField] private Sprite foodSprite;
     [SerializeField] private Sprite lanternSprite;
     [SerializeField] private Animator playerAnimator;
 
+    [Header("Prefabs to spawn when thrown")]
     [SerializeField] private GameObject sageStickPrefab;
     [SerializeField] private GameObject lanternPrefab;
     [SerializeField] private GameObject foodPrefab;
+    [SerializeField] private GameObject plungerPrefab;
+
+    [SerializeField] private Collider2D spellCastingAreaCollider;
+
+    private Spellcasting spellcasting;
+    private BoxCollider2D inventoryCollider;
 
     public bool swinging;
 
@@ -40,6 +48,9 @@ public class PlayerInventory : MonoBehaviour
 
         EVENT_BUS.Subscribe(EventType.ATTACK, Attack);
         EVENT_BUS.Subscribe(EventType.THROW_ITEM, DoThrowItem);
+
+        spellcasting = GetComponent<Spellcasting>();
+        inventoryCollider = GetComponent<BoxCollider2D>();
     }
 
     void Update()
@@ -101,21 +112,15 @@ public class PlayerInventory : MonoBehaviour
 
     private void Attack(PublishEventArgs args)
     {
-        StartCoroutine(DoSwingAnimation());
-        //switch (CurrentItem)
-        //{
-        //    case ItemType.PLUNGER:
-        //        StartCoroutine(DoSwingAnimation());
-        //        break;
-        //    case ItemType.SAGE_STICK:
-        //        StartCoroutine(DoSwingAnimation());
-        //        break;
-        //    case ItemType.LANTERN:
-        //        StartCoroutine(DoSwingAnimation());
-        //        break;
-        //    case ItemType.NONE:
-        //        break;
-        //}
+        if (CurrentItem != ItemType.NONE)
+        {
+            StartCoroutine(DoSwingAnimation());
+        }
+
+        if (inventoryCollider.IsTouching(spellCastingAreaCollider))
+        {
+            spellcasting.TrySpellCasting();
+        }
     }
 
     IEnumerator DoSwingAnimation()
@@ -136,8 +141,6 @@ public class PlayerInventory : MonoBehaviour
         GameObject thrownItem = null;
         switch (CurrentItem)
         {
-            case ItemType.PLUNGER:
-                break;
             case ItemType.SAGE_STICK:
                 thrownItem = Instantiate(sageStickPrefab);
                 StartCoroutine(throwItem(thrownItem));
@@ -149,6 +152,10 @@ public class PlayerInventory : MonoBehaviour
             case ItemType.LANTERN:
                 thrownItem = Instantiate(lanternPrefab);
                 EVENT_BUS.Publish(EventType.LANTERN_DROPPED, null);
+                StartCoroutine(throwItem(thrownItem));
+                break;
+            case ItemType.PLUNGER:
+                thrownItem = Instantiate(plungerPrefab);
                 StartCoroutine(throwItem(thrownItem));
                 break;
             case ItemType.NONE:

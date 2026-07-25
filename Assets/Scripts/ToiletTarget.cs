@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal.Internal;
 
-public class ToiletTarget : MonoBehaviour, IInteractable
+public class ToiletTarget : MonoBehaviour, IEnemy
 {
     private bool isClogged = true;
     private SpriteRenderer spriteRenderer;
@@ -22,28 +22,18 @@ public class ToiletTarget : MonoBehaviour, IInteractable
         gameObject.transform.localScale = temp;        
     }
 
-    public void Interact(PlayerInventory inventory)
+    public void HitWithWeapon(PlayerInventory.ItemType weapon)
     {
-        if (!isClogged)
+        SFX_Controller.instance?.playSFX("whiff", transform, 1f);
+        if (weapon == PlayerInventory.ItemType.PLUNGER)
         {
-            Debug.Log("The toilet isn't clogged!");
-            return;
+            // One shot kill
+            EVENT_BUS.Publish(EventType.ENEMY_KILLED, null);
+            Destroy(this.gameObject);
         }
-
-        if (inventory.CurrentItem != PlayerInventory.ItemType.PLUNGER)
+        else
         {
-            Debug.Log("You need a plunger to unclog the toilet!");
-            return;
+            // Tell player they need a plunger?
         }
-
-        isClogged = false;
-
-        EVENT_BUS.Publish(EventType.TOILET_UNCLOGGED, null);
-
-        Debug.Log("You unclogged the toilet!");
-
-        inventory.DropItem(PlayerInventory.ItemType.PLUNGER);
-
-        Debug.Log("The plunger broke!");
     }
 }

@@ -59,7 +59,7 @@ public class MasterGameController : MonoBehaviour
         {
             Debug.Log("SPAWNING TASK");
             //SpawnRandomTask(null);
-            SpawnTask(GAME_TASK.FEEDING_BOB, ROOM.BEDROOM);
+            SpawnTask(GAME_TASK.TOILET_PLUNGING, ROOM.BATHROOM);
         }
     }
 
