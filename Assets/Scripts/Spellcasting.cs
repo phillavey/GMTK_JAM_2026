@@ -5,8 +5,8 @@ public class Spellcasting : MonoBehaviour
     // Mana / spell progress settings
     public static int manaRequiredToCast = 100; // total mana required to cast via direct cast (kept for reference)
     [SerializeField] private int manaPerTask = 25; // mana gained when a task completes
-    [SerializeField] private int manaCostPerSwing = 10; // mana consumed per swing in seance room
-    [SerializeField] private int spellProgressPerSwing = 10; // progress added per swing
+    [SerializeField] private int manaCostPerSwing = 5; // mana consumed per swing in seance room
+    [SerializeField] private int spellProgressPerSwing = 5; // progress added per swing
     [SerializeField] private int spellProgressRequired = 50; // progress required to complete the spell
 
     public int focusMeter;
@@ -27,7 +27,7 @@ public class Spellcasting : MonoBehaviour
 
     void DecreaseManaForSprinting(PublishEventArgs args)
     {
-        focusMeter--;
+        focusMeter -= 2;
         EVENT_BUS.Publish(EventType.MANA_CHANGED, null);
     }
 

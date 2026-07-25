@@ -56966,7 +56966,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1670460779
 Transform:
   m_ObjectHideFlags: 0
@@ -57391,11 +57391,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7937eb245f69d042a93261e9c66dfe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spellcasting
-  manaPerTask: 20
-  manaCostPerSwing: 10
-  spellProgressPerSwing: 10
+  manaPerTask: 15
+  manaCostPerSwing: 5
+  spellProgressPerSwing: 5
   spellProgressRequired: 50
-  focusMeter: 0
+  focusMeter: 5
   spellProgress: 0
 --- !u!1 &1772422323
 GameObject:

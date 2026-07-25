@@ -91,7 +91,7 @@ public class UITasklist : MonoBehaviour
 
         if (!string.IsNullOrEmpty(friendlyRoomName))
         {
-            string searchString = friendlyDescription + " in " + friendlyRoomName;
+            string searchString = friendlyDescription + " " + friendlyRoomName;
             Debug.Log("Search String: " + searchString);
             foreach (Transform child in taskContainer)
             {

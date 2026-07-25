@@ -53,7 +53,7 @@ public class GlobalTimer : MonoBehaviour
 
         if (SpawnTimer <= 0)
         {
-            SpawnTimer = 15f;
+            SpawnTimer = 10f;
             EVENT_BUS.Publish(EventType.EVENT_STARTED, null);
         }
 
