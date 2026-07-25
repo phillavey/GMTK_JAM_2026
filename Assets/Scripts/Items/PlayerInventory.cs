@@ -123,7 +123,7 @@ public class PlayerInventory : MonoBehaviour
 
         if (inventoryCollider.IsTouching(spellCastingAreaCollider))
         {
-            spellcasting.TrySpellCasting();
+            spellcasting.ApplySeanceSwing();
         }
     }
 
