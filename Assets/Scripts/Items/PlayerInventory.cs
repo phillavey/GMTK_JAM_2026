@@ -15,7 +15,6 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private Sprite foodSprite;
     [SerializeField] private Sprite lanternSprite;
     [SerializeField] private Sprite scissorsSprite;
-    [SerializeField] private Animator playerAnimator;
 
     [Header("Prefabs to spawn when thrown")]
     [SerializeField] private GameObject sageStickPrefab;
@@ -30,6 +29,7 @@ public class PlayerInventory : MonoBehaviour
     private BoxCollider2D inventoryCollider;
 
     public bool swinging;
+    private float swingProgress = 0f;
 
     public enum ItemType
     {
@@ -45,8 +45,6 @@ public class PlayerInventory : MonoBehaviour
 
     void Start()
     {
-        playerAnimator.enabled = false;
-
         mainCamera = Camera.main;
 
         EVENT_BUS.Subscribe(EventType.ATTACK, Attack);
@@ -58,7 +56,26 @@ public class PlayerInventory : MonoBehaviour
 
     void Update()
     {
-        PointItemAtMouse();
+        if(swinging)
+        {
+            swingProgress += 7f * Time.deltaTime;
+            if (swingProgress >= 1f)
+            {
+                swinging = false;
+                swingProgress = 0f;
+                itemRenderer.transform.localScale /= 1.2f;
+                return;
+            }
+
+            float angle = GetAngleFromPlayerToMouse();
+            Vector3 mouseMinus45 = new Vector3(0, 0, angle - 180);
+            Vector3 mousePlus45 = new Vector3(0, 0, angle - 90);
+            transform.localEulerAngles = Vector3.Lerp(mousePlus45, mouseMinus45, swingProgress); 
+        }
+        else
+        { 
+            PointItemAtMouse();
+        }
     }
 
     public void PickUpItem(ItemType item)
@@ -118,25 +135,14 @@ public class PlayerInventory : MonoBehaviour
     {
         if (CurrentItem != ItemType.NONE)
         {
-            StartCoroutine(DoSwingAnimation());
+            swinging = true;
+            itemRenderer.transform.localScale *= 1.2f;
         }
 
         if (inventoryCollider.IsTouching(spellCastingAreaCollider))
         {
             spellcasting.TrySpellCasting();
         }
-    }
-
-    IEnumerator DoSwingAnimation()
-    {
-        swinging = true;
-        float angle = GetAngleFromPlayerToMouse();
-        transform.localEulerAngles = new Vector3(0, 0, angle - 135);
-        playerAnimator.enabled = true;
-        playerAnimator.SetTrigger("player_swing");
-        yield return new WaitForSeconds(1f);
-        playerAnimator.enabled = false;
-        swinging = false;
     }
 
     void DoThrowItem(PublishEventArgs args)
