@@ -28,6 +28,7 @@ public enum EventType
     BOB_FED,
     SPELL_CAST_SUCCESS,
     NUKEING_IS_NOW_LEGAL,
+    SPRINTED,
 }
 
 public static class EVENT_BUS

@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static MasterGameController;
 
 public class PlayerCharacter : MonoBehaviour
 {
     // Editable in the unity editor
-    public float speedLimit = 20f;
+    public float sprintSpeed = 20f;
+    public float sprintDuration = 1.5f;
+    public float sprintControlFactor;
     public float verticalMoveSpeed = 30f;
     public float horizontalMoveSpeed = 30f;
 
@@ -18,16 +19,20 @@ public class PlayerCharacter : MonoBehaviour
     private InputAction attack;
     private InputAction throw_;
     private InputAction move;
-    //private InputAction sprint;
-    //private float sprintCounter;
+    private InputAction sprint;
+    private float sprintCounter;
+    private float boostSpeed;
     private Vector2 moveValue;
+
+    private Spellcasting spellScript;
 
     void Start()
     {
         this.attack = InputSystem.actions.FindAction("Attack");
         this.move = InputSystem.actions.FindAction("Move");
         this.throw_ = InputSystem.actions.FindAction("Throw");
-        //this.sprint = InputSystem.actions.FindAction("Sprint");
+        this.sprint = InputSystem.actions.FindAction("Sprint");
+        spellScript = GetComponentInChildren<Spellcasting>();
 
         MusicController.instance?.PlayMusic("main_theme");
     }
@@ -42,6 +47,10 @@ public class PlayerCharacter : MonoBehaviour
         // Stuff that doesn't need to be sync'd to the game clock
         DoAnimations();
         ReactToPlayerInput();
+        if (sprintCounter > 0)
+            sprintCounter = Mathf.Clamp(sprintCounter - Time.deltaTime, 0f, 1000f);
+        else
+            boostSpeed = 1f;
     }
 
     private void ReactToPlayerInput()
@@ -51,7 +60,7 @@ public class PlayerCharacter : MonoBehaviour
         float horizontal = moveValue.normalized.x;
         float vertical = moveValue.normalized.y;
 
-        rigidbody.linearVelocity = new Vector2(horizontal * horizontalMoveSpeed, vertical * verticalMoveSpeed);
+        //rigidbody.linearVelocity = new Vector2(horizontal * horizontalMoveSpeed, vertical * verticalMoveSpeed);
 
         if (attack.WasPressedThisFrame()) {
             EVENT_BUS.Publish(EventType.ATTACK, null);
@@ -61,10 +70,39 @@ public class PlayerCharacter : MonoBehaviour
         {
             EVENT_BUS.Publish(EventType.THROW_ITEM, null);
         }
+
+        if (sprint.WasPressedThisFrame())
+        {
+            SprintBoost(horizontal, vertical);
+        }
+
+        if (boostSpeed > 1f)
+        {
+            rigidbody.AddRelativeForce(new Vector2(horizontal * horizontalMoveSpeed * sprintControlFactor, vertical * verticalMoveSpeed * sprintControlFactor));
+            rigidbody.linearVelocity = Vector2.ClampMagnitude(rigidbody.linearVelocity, boostSpeed * 10);
+        }
+        else
+        {
+            rigidbody.linearVelocity = new Vector2(horizontal * horizontalMoveSpeed, vertical * verticalMoveSpeed);
+
+        }
     }
 
     private void DoAnimations()
     {
         // Animation code...
+    }
+
+    private void SprintBoost(float h, float v)
+    {
+        if (spellScript.focusMeter <= 0)
+            return;
+
+        EVENT_BUS.Publish(EventType.SPRINTED, null);
+        Debug.Log("BOOSTING");
+        sprintCounter += sprintDuration;
+        boostSpeed = sprintSpeed;
+
+        rigidbody.AddRelativeForce(new Vector2(h * boostSpeed * 10, v * boostSpeed * 10), ForceMode2D.Impulse);
     }
 }

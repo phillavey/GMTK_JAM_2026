@@ -62,6 +62,7 @@ public class MasterGameController : MonoBehaviour
         random = new System.Random();
         EVENT_BUS.Subscribe(EventType.EVENT_STARTED, SpawnRandomTask);
         EVENT_BUS.Subscribe(EventType.ENEMY_KILLED, OnEnemyKilled);
+        EVENT_BUS.Subscribe(EventType.TIMER_FINISHED, DoGameOver);
     }
 
     private string CountKey(GAME_TASK task, ROOM room) => $"{task}_{room}";
@@ -292,5 +293,10 @@ public class MasterGameController : MonoBehaviour
         Debug.Log($"Spawning toilet in stall #{whichToilet} at pos {toilet.transform.position.x}");
         
         toilet.SetActive(true);
+    }
+
+    void DoGameOver(PublishEventArgs args)
+    {
+        Time.timeScale = 0f;
     }
 }

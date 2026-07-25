@@ -27,6 +27,7 @@ public class PlayerInventory : MonoBehaviour
 
     private Spellcasting spellcasting;
     private BoxCollider2D inventoryCollider;
+    private Vector3 swingScalar;
 
     public bool swinging;
     private float swingProgress = 0f;
@@ -46,6 +47,7 @@ public class PlayerInventory : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
+        swingScalar = itemRenderer.transform.localScale * 1.4f;
 
         EVENT_BUS.Subscribe(EventType.ATTACK, Attack);
         EVENT_BUS.Subscribe(EventType.THROW_ITEM, DoThrowItem);
@@ -63,7 +65,7 @@ public class PlayerInventory : MonoBehaviour
             {
                 swinging = false;
                 swingProgress = 0f;
-                itemRenderer.transform.localScale /= 1.2f;
+                itemRenderer.transform.localScale = Vector3.one;
                 return;
             }
 
@@ -136,17 +138,18 @@ public class PlayerInventory : MonoBehaviour
         if (CurrentItem != ItemType.NONE)
         {
             swinging = true;
-            itemRenderer.transform.localScale *= 1.2f;
-        }
+            itemRenderer.transform.localScale = swingScalar;
 
-        if (inventoryCollider.IsTouching(spellCastingAreaCollider))
-        {
-            spellcasting.ApplySeanceSwing();
+            if (inventoryCollider.IsTouching(spellCastingAreaCollider))
+            {
+                spellcasting.ApplySeanceSwing();
+            }
         }
     }
 
     void DoThrowItem(PublishEventArgs args)
     {
+        itemRenderer.transform.localScale = Vector3.one;
         GameObject thrownItem = null;
         switch (CurrentItem)
         {

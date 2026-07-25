@@ -18,10 +18,17 @@ public class Spellcasting : MonoBehaviour
     private void Awake()
     {
         EVENT_BUS.Subscribe(EventType.TASK_COMPLETED, IncreaseMana);
+        EVENT_BUS.Subscribe(EventType.SPRINTED, DecreaseManaForSprinting);
         playerInventory = GetComponent<PlayerInventory>();
 
-        focusMeter = 0;
+        focusMeter = 5;
         spellProgress = 0;
+    }
+
+    void DecreaseManaForSprinting(PublishEventArgs args)
+    {
+        focusMeter--;
+        EVENT_BUS.Publish(EventType.MANA_CHANGED, null);
     }
 
     void IncreaseMana(PublishEventArgs args)
