@@ -69,6 +69,7 @@ public class UITasklist : MonoBehaviour
             if (textComp != null)
             {
                 textComp.text = label;
+                textComp.fontSize = 16;
             }
         }
     }
