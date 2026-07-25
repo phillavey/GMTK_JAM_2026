@@ -18,8 +18,9 @@ public class MasterGameController : MonoBehaviour
     public Vector2 BathRoomCenter = new Vector2(-57, 27);
 
     [Header("Spawnables")]
-    [Tooltip("Ghost Prefab for spawning ghosts event.")]
+    [Tooltip("Ghost Prefab for spawning bubbles event.")]
     [SerializeField] private GameObject ghostPrefab;
+    [SerializeField] private GameObject bubblePrefab;
     [SerializeField] private GameObject bob; /* <- prefab */
     [SerializeField] private GameObject toiletPrefab;
     [SerializeField] private Light2D globalLight;
@@ -34,6 +35,7 @@ public class MasterGameController : MonoBehaviour
         TOILET_PLUNGING,
         DISPELLING_DARKNESS,
         FEEDING_BOB,
+        BUBBLE_POPPING,
     }
 
     public enum ROOM
@@ -59,7 +61,7 @@ public class MasterGameController : MonoBehaviour
         {
             Debug.Log("SPAWNING TASK");
             //SpawnRandomTask(null);
-            SpawnTask(GAME_TASK.NUKE_DIFFUSING, ROOM.BATHROOM);
+            SpawnTask(GAME_TASK.BUBBLE_POPPING, ROOM.BATHROOM);
         }
     }
 
@@ -95,6 +97,9 @@ public class MasterGameController : MonoBehaviour
             case GAME_TASK.FEEDING_BOB:
                 SpawnFeedBobTask();
                 break;
+            case GAME_TASK.BUBBLE_POPPING:
+                SpawnBubblePoppingTask();
+                break;
         }
     }
 
@@ -125,7 +130,7 @@ public class MasterGameController : MonoBehaviour
 
     void SpawnGhostbustingTask()
     {
-        // Amount of ghosts to spawn can be changed here
+        // Amount of bubbles to spawn can be changed here
         int numGhosts = 30;
 
         GameObject[] ghosts = new GameObject[numGhosts];
@@ -146,6 +151,31 @@ public class MasterGameController : MonoBehaviour
         foreach (GameObject ghost in ghosts)
         {
             ghost.SetActive(true);
+        }
+    }
+
+    void SpawnBubblePoppingTask()
+    {
+        int numBubbles = 5;
+
+        GameObject[] bubbles = new GameObject[numBubbles];
+        float distanceAway;
+        for (int i = 0; i < numBubbles; i++)
+        {
+            distanceAway = (float)random.NextDouble() * 2;
+            GameObject bubble = Instantiate(bubblePrefab);
+            bubble.transform.position = new Vector3(
+                ((float)(random.NextDouble() * 3 - 1.5f) * distanceAway) + taskSpawnPoint.x,
+                ((float)(random.NextDouble() * 3 - 1.5f) * distanceAway) + taskSpawnPoint.y,
+                0
+            );
+            bubbles[i] = bubble;
+        }
+
+        // Setup ^, then activate
+        foreach (GameObject bubble in bubbles)
+        {
+            bubble.SetActive(true);
         }
     }
 
