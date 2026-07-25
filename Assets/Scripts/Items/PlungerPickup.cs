@@ -4,10 +4,7 @@ public class PlungerPickup : MonoBehaviour, IInteractable
 {
     public void Interact(PlayerInventory inventory)
     {
-        EVENT_BUS.Publish(EventType.ITEM_PICKUP, null);
-
         inventory.PickUpItem(PlayerInventory.ItemType.PLUNGER);
-
         Destroy(gameObject);
     }
 

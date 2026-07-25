@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public enum EventType
 {
@@ -13,7 +12,6 @@ public enum EventType
     PLAYER_HURT,
     TOILET_UNCLOGGED,
     GHOSTS_BUSTED,
-    ITEM_PICKUP,
     NUKE_DETECTED_PLAYER,
     NUKE_NOT_DETECTED_PLAYER,
     NUKE_DEFUSED,

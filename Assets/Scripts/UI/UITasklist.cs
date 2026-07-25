@@ -12,11 +12,11 @@ public class UITasklist : MonoBehaviour
 
     private Dictionary<object, string> gameTaskToUIFriendlyName = new Dictionary<object, string>
     {
-        { GAME_TASK.GHOSTBUSTING, "Bust the ghosts" },
-        { GAME_TASK.TOILET_PLUNGING, "Unclog the toilet" },
-        { GAME_TASK.FEEDING_BOB, "Feed Bob" },
-        { GAME_TASK.BUBBLE_POPPING, "Pop the dirty bubble" },
-        { GAME_TASK.NUKE_DIFFUSING, "Defuse Nuke Guy" }
+        { GAME_TASK.GHOSTBUSTING, "Ghosts appeared in the" },
+        { GAME_TASK.TOILET_PLUNGING, "The toilet's clogged!" },
+        { GAME_TASK.FEEDING_BOB, "Bob is hungry in the" },
+        { GAME_TASK.BUBBLE_POPPING, "Dirty bubbles in the" },
+        { GAME_TASK.NUKE_DIFFUSING, "Defuse Nuke Guy before he explodes!!!" }
     };
 
     private Dictionary<object, string> roomToUIFriendlyName = new Dictionary<object, string>
@@ -59,7 +59,7 @@ public class UITasklist : MonoBehaviour
             string label = friendlyDescription;
             if (taskRoom != null && roomToUIFriendlyName.TryGetValue(taskRoom, out string friendlyRoomName))
             {
-                label = friendlyDescription + " in " + friendlyRoomName;
+                label = friendlyDescription + " " + friendlyRoomName;
             }
 
             GameObject newTask = Instantiate(taskLabelPrefab, taskContainer);
