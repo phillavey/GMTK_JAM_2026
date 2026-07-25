@@ -1,7 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
+using static MasterGameController;
 
 public class DirtyBubble : MonoBehaviour, IEnemy
 {
+    public ROOM taskRoom;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
 
@@ -31,7 +34,12 @@ public class DirtyBubble : MonoBehaviour, IEnemy
         if (weapon == PlayerInventory.ItemType.SCISSORS)
         {
             // One shot kill
-            EVENT_BUS.Publish(EventType.ENEMY_KILLED, null);
+            Dictionary<string, object> eventArgs = new()
+            {
+                { "task_name", GAME_TASK.BUBBLE_POPPING },
+                { "task_room", taskRoom }
+            };
+            EVENT_BUS.Publish(EventType.ENEMY_KILLED, new PublishEventArgs(eventArgs));
             Destroy(this.gameObject);
         }
         else

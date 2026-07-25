@@ -1,42 +1,118 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
+using TMPro;
 using static MasterGameController;
 
 public class UITasklist : MonoBehaviour
 {
-    private VisualElement taskContainer;
+    [Header("UI References")]
+    [SerializeField] private Transform taskContainer;
+    [SerializeField] private GameObject taskLabelPrefab;
+
+    private Dictionary<object, string> gameTaskToUIFriendlyName = new Dictionary<object, string>
+    {
+        { GAME_TASK.GHOSTBUSTING, "Bust the ghosts" },
+        { GAME_TASK.TOILET_PLUNGING, "Unclog the toilet" },
+        { GAME_TASK.FEEDING_BOB, "Feed Bob" },
+        { GAME_TASK.BUBBLE_POPPING, "Pop the dirty bubble" },
+        { GAME_TASK.NUKE_DIFFUSING, "Defuse Nuke Guy" }
+    };
+
+    private Dictionary<object, string> roomToUIFriendlyName = new Dictionary<object, string>
+    {
+        //{ ROOM.SEANCE_ROOM, "Seance Room" },
+        { ROOM.LIVING_ROOM, "Living Room" },
+        { ROOM.KITCHEN, "Kitchen" },
+        { ROOM.BATHROOM, "Bathroom" },
+        { ROOM.BEDROOM, "Bedroom" },
+        { ROOM.PURPLE_ROOM, "Purple Room" }
+    };
 
     void OnEnable()
     {
-        var uiDocument = GetComponent<UIDocument>();
-        taskContainer = uiDocument.rootVisualElement.Q<VisualElement>("TaskListContainer");
         EVENT_BUS.Subscribe(EventType.NOTIFY_UI_EVENT_STARTED, AddTaskToList);
         EVENT_BUS.Subscribe(EventType.TASK_COMPLETED, RemoveTaskFromList);
+    }
+
+    void OnDisable()
+    {
+        EVENT_BUS.Unsubscribe(EventType.NOTIFY_UI_EVENT_STARTED, AddTaskToList);
+        EVENT_BUS.Unsubscribe(EventType.TASK_COMPLETED, RemoveTaskFromList);
     }
 
     void AddTaskToList(PublishEventArgs args)
     {
         args.Data.TryGetValue("task_name", out object taskName);
         args.Data.TryGetValue("task_id", out object taskId);
+        args.Data.TryGetValue("task_room", out object taskRoom);
 
         if (taskName == null || taskId == null)
         {
-            Debug.LogError($"ARGS NOT PASSED CORRECTLY: {taskName}, {taskId}");
+            Debug.LogError($"ARGS NOT PASSED CORRECTLY: {taskName}, {taskId}, {taskRoom}");
+            return;
         }
-        
-        Label taskLabel = new Label(taskName.ToString());
-        taskLabel.name = $"{(int) taskId}";
-        taskContainer.Add(taskLabel);
+
+        if (gameTaskToUIFriendlyName.TryGetValue(taskName, out string friendlyDescription))
+        {
+            // Build label; include room only if provided
+            string label = friendlyDescription;
+            if (taskRoom != null && roomToUIFriendlyName.TryGetValue(taskRoom, out string friendlyRoomName))
+            {
+                label = friendlyDescription + " in " + friendlyRoomName;
+            }
+
+            GameObject newTask = Instantiate(taskLabelPrefab, taskContainer);
+            newTask.name = $"{(int)taskId}";
+
+            TextMeshProUGUI textComp = newTask.GetComponent<TextMeshProUGUI>();
+            if (textComp != null)
+            {
+                textComp.text = label;
+            }
+        }
     }
 
     void RemoveTaskFromList(PublishEventArgs args)
     {
         args.Data.TryGetValue("task_name", out object taskName);
-        List<Label> result = taskContainer.Query<Label>().Where(elem => elem.text == taskName.ToString()).ToList();
+        args.Data.TryGetValue("task_room", out object roomName);
 
-        taskContainer.Remove(result[0]);
+        Debug.Log($"Removing task: {taskName} in {roomName}");
+
+        gameTaskToUIFriendlyName.TryGetValue(taskName, out string friendlyDescription);
+
+        // If a room was provided, attempt exact match. If no room (null), remove any entry containing the task description.
+        string friendlyRoomName = null;
+        if (roomName != null)
+        {
+            roomToUIFriendlyName.TryGetValue(roomName, out friendlyRoomName);
+        }
+
+        if (!string.IsNullOrEmpty(friendlyRoomName))
+        {
+            string searchString = friendlyDescription + " in " + friendlyRoomName;
+            Debug.Log("Search String: " + searchString);
+            foreach (Transform child in taskContainer)
+            {
+                TextMeshProUGUI textComp = child.GetComponent<TextMeshProUGUI>();
+                if (textComp != null && textComp.text == searchString)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+        }
+        else if (!string.IsNullOrEmpty(friendlyDescription))
+        {
+            // Room not provided: remove any task that contains the friendly description
+            foreach (Transform child in taskContainer)
+            {
+                TextMeshProUGUI textComp = child.GetComponent<TextMeshProUGUI>();
+                if (textComp != null && textComp.text != null && textComp.text.Contains(friendlyDescription))
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+        }
     }
 }

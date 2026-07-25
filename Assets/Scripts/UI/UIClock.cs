@@ -1,34 +1,24 @@
 using System;
 using UnityEngine;
-using UnityEngine.UIElements; // Required for UI Toolkit
+using TMPro; // Required for Canvas TextMeshPro elements
 
 public class UIClock : MonoBehaviour
 {
-    private Label timerLabel;
-
-    void OnEnable()
-    {
-        var uiDocument = GetComponent<UIDocument>();
-
-        timerLabel = uiDocument.rootVisualElement.Q<Label>("TimerLabel");
-    }
+    // Expose the text component to the Unity Inspector
+    [SerializeField] private TextMeshProUGUI timerText;
 
     void Update()
     {
-        if (timerLabel == null)
-        {
-            return;
-        }
-
-        if (GlobalTimer.Instance == null)
+        // Safety checks
+        if (timerText == null || GlobalTimer.Instance == null)
         {
             return;
         }
 
         float timeRemaining = GlobalTimer.Instance.TimeRemaining;
-
         TimeSpan time = TimeSpan.FromSeconds(timeRemaining);
 
-        timerLabel.text = time.ToString(@"mm\:ss");
+        // Update the Canvas text
+        timerText.text = time.ToString(@"mm\:ss");
     }
 }
