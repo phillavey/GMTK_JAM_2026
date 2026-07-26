@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrarySourceAsset
+  m_Library:
+  - m_Name: Player
+    m_Hash: 531988307
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Lizard Wizard movement1_0
+      m_Hash: 1072336059
+      m_Sprite: {fileID: 8582356940176674738, guid: dbc32a5bef770274aa726d8c7be3c798, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 8582356940176674738, guid: dbc32a5bef770274aa726d8c7be3c798, type: 3}
+    - m_Name: Lizard Wizard movement2_0
+      m_Hash: 1034695394
+      m_Sprite: {fileID: -2719618842243836756, guid: e2814019955b7084cbba63622396554e, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2719618842243836756, guid: e2814019955b7084cbba63622396554e, type: 3}
+    - m_Name: Lizard Wizard movement3_0
+      m_Hash: 1013864661
+      m_Sprite: {fileID: -943769702265769919, guid: 6f9c45f747f52804aa21bc1a16140c13, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -943769702265769919, guid: 6f9c45f747f52804aa21bc1a16140c13, type: 3}
+    - m_Name: Lizard Wizard movement4_0
+      m_Hash: 958484048
+      m_Sprite: {fileID: 1645151827370575730, guid: a313b7ad4ecc9d24d9c8656e8f5ab20b, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1645151827370575730, guid: a313b7ad4ecc9d24d9c8656e8f5ab20b, type: 3}
+    - m_Name: Lizard Wizard movement5_0
+      m_Hash: 954410087
+      m_Sprite: {fileID: -2763586590133601975, guid: e75bab93d12dc8e41b85e16dc155f193, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2763586590133601975, guid: e75bab93d12dc8e41b85e16dc155f193, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 5
+  m_PrimaryLibraryGUID: 
+  m_ModificationHash: 639206188166362270
+  m_Version: 1

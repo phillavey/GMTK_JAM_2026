@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,7 +14,9 @@ public class PlayerCharacter : MonoBehaviour
     // Serialized Fields (other objects attached via the editor)
     [SerializeField] private Rigidbody2D rigidbody;
     [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private SpriteRenderer flameRenderer;
     [SerializeField] private GameObject playerInventory;
+    [SerializeField] private CinemachineImpulseSource impulseSource;
 
     // Code-only stuff (NEVER accessed via the unity editor)
     private InputAction attack;
@@ -23,7 +26,8 @@ public class PlayerCharacter : MonoBehaviour
     private float sprintCounter;
     private float boostSpeed;
     private Vector2 moveValue;
-
+    private float horizontal = 0;
+    private float vertical = 0;
     private Spellcasting spellScript;
 
     void Start()
@@ -39,7 +43,11 @@ public class PlayerCharacter : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Stuff that needs to be sync'd to the game clock
+        if (boostSpeed > 1f)
+        {
+            rigidbody.AddRelativeForce(new Vector2(horizontal * horizontalMoveSpeed * sprintControlFactor, vertical * verticalMoveSpeed * sprintControlFactor));
+            rigidbody.linearVelocity = Vector2.ClampMagnitude(rigidbody.linearVelocity, boostSpeed * 10);
+        }
     }
 
     void Update()
@@ -48,19 +56,25 @@ public class PlayerCharacter : MonoBehaviour
         DoAnimations();
         ReactToPlayerInput();
         if (sprintCounter > 0)
+        {
+            flameRenderer.enabled = true;
             sprintCounter = Mathf.Clamp(sprintCounter - Time.deltaTime, 0f, 1000f);
+        }
         else
+        {
+            flameRenderer.enabled = false;
             boostSpeed = 1f;
+        }
     }
 
     private void ReactToPlayerInput()
     {
         // Recording inputs should not sync with game clock
         moveValue = move.ReadValue<Vector2>();
-        float horizontal = moveValue.normalized.x;
-        float vertical = moveValue.normalized.y;
+        horizontal = moveValue.normalized.x;
+        vertical = moveValue.normalized.y;
 
-        //rigidbody.linearVelocity = new Vector2(horizontal * horizontalMoveSpeed, vertical * verticalMoveSpeed);
+        sprite.flipX = horizontal < 0;
 
         if (attack.WasPressedThisFrame()) {
             EVENT_BUS.Publish(EventType.ATTACK, null);
@@ -76,15 +90,9 @@ public class PlayerCharacter : MonoBehaviour
             SprintBoost(horizontal, vertical);
         }
 
-        if (boostSpeed > 1f)
-        {
-            rigidbody.AddRelativeForce(new Vector2(horizontal * horizontalMoveSpeed * sprintControlFactor, vertical * verticalMoveSpeed * sprintControlFactor));
-            rigidbody.linearVelocity = Vector2.ClampMagnitude(rigidbody.linearVelocity, boostSpeed * 10);
-        }
-        else
+        if (boostSpeed <= 1f)
         {
             rigidbody.linearVelocity = new Vector2(horizontal * horizontalMoveSpeed, vertical * verticalMoveSpeed);
-
         }
     }
 
@@ -99,8 +107,8 @@ public class PlayerCharacter : MonoBehaviour
             return;
 
         EVENT_BUS.Publish(EventType.SPRINTED, null);
-        Debug.Log("BOOSTING");
-        sprintCounter += sprintDuration;
+        impulseSource.GenerateImpulse();
+        sprintCounter = sprintDuration;
         boostSpeed = sprintSpeed;
 
         rigidbody.AddRelativeForce(new Vector2(h * boostSpeed * 10, v * boostSpeed * 10), ForceMode2D.Impulse);

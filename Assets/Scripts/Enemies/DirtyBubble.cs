@@ -48,9 +48,4 @@ public class DirtyBubble : MonoBehaviour, IEnemy
         }
 
     }
-
-    void fixVelocity()
-    {
-        //Mathf.Clamp(rb.vel); // Maybe do this?
-    }
 }

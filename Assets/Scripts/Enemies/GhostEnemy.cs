@@ -6,6 +6,7 @@ public class GhostEnemy : MonoBehaviour, IEnemy
 {
     public ROOM taskRoom;
     [SerializeField] private GameObject playerCharacter;
+    private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
 
     public float moveSpeed = 0.2f;
@@ -13,14 +14,18 @@ public class GhostEnemy : MonoBehaviour, IEnemy
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
         InvokeRepeating("fixVelocity", 5f, 5f);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.position = Vector3.MoveTowards(transform.position, playerCharacter.transform.position, moveSpeed);
+        var direction = Vector3.zero;
+        direction = playerCharacter.transform.position - transform.position;
+        rb.AddRelativeForce(direction.normalized * moveSpeed, ForceMode2D.Force);
         spriteRenderer.flipX = playerCharacter.transform.position.x < transform.position.x;
+        rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, 10f);
 
         Vector3 tempPos = transform.position;
         tempPos.y += Mathf.Sin(Time.fixedTime * Mathf.PI * 5f) * 0.015f;

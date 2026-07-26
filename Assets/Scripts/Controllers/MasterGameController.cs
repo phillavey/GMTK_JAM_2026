@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
@@ -31,6 +29,9 @@ public class MasterGameController : MonoBehaviour
 
     private System.Random random;
     private Vector2 taskSpawnPoint;
+
+    private bool bobIsActive = false;
+    private bool nukeIsActive = false;
 
     private static int TASK_ID = 0;
     // Track active spawned task enemies by key "TASK_ROOM" -> count
@@ -105,8 +106,8 @@ public class MasterGameController : MonoBehaviour
         if (Keyboard.current != null && Keyboard.current.tKey.wasPressedThisFrame)
         {
             Debug.Log("SPAWNING TASK");
-            SpawnRandomTask(null);
-            //SpawnTask(GAME_TASK.NUKE_DIFFUSING, ROOM.LIVING_ROOM);
+            //SpawnRandomTask(null);
+            SpawnTask(GAME_TASK.GHOSTBUSTING, ROOM.LIVING_ROOM);
         }
     }
 
@@ -121,8 +122,16 @@ public class MasterGameController : MonoBehaviour
 
     void SpawnTask(GAME_TASK task, ROOM room)
     {
-        // For some tasks (like the nuke) we don't expose the room in the UI
-        Dictionary<string, object> eventArgs;
+        if (task == GAME_TASK.NUKE_DIFFUSING && nukeIsActive)
+        {
+            task = GAME_TASK.GHOSTBUSTING;
+        } else if (task == GAME_TASK.FEEDING_BOB && bobIsActive)
+        {
+            task = GAME_TASK.BUBBLE_POPPING;
+        }
+
+            // For some tasks (like the nuke) we don't expose the room in the UI
+            Dictionary<string, object> eventArgs;
         if (task == GAME_TASK.NUKE_DIFFUSING || task == GAME_TASK.TOILET_PLUNGING)
         {
             eventArgs = new Dictionary<string, object>()
@@ -149,6 +158,7 @@ public class MasterGameController : MonoBehaviour
                 SpawnGhostbustingTask(room);
                 break;
             case GAME_TASK.NUKE_DIFFUSING:
+
                 EVENT_BUS.Publish(EventType.NUKEING_IS_NOW_LEGAL, null);
                 break;
             case GAME_TASK.TOILET_PLUNGING:

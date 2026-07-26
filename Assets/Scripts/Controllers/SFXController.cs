@@ -24,17 +24,29 @@ public class SFX_Controller : MonoBehaviour
     void OnEnable()
     {
         EVENT_BUS.Subscribe(EventType.ATTACK, HandleAttackSFX);
+        EVENT_BUS.Subscribe(EventType.NUKEING_IS_NOW_LEGAL, PlayNukeSFX);
+        EVENT_BUS.Subscribe(EventType.TASK_COMPLETED, PlaySuccSFX);
     }
 
     private void OnDisable()
     {
         EVENT_BUS.Unsubscribe(EventType.ATTACK, HandleAttackSFX);
+        EVENT_BUS.Unsubscribe(EventType.NUKEING_IS_NOW_LEGAL, PlayNukeSFX);
+    }
+
+    void PlaySuccSFX(PublishEventArgs args)
+    {
+        playSFX("task_success", player.transform, 0.75f);
+    }
+
+    void PlayNukeSFX(PublishEventArgs args)
+    {
+        playSFX("nuke_alert", player.transform, 0.75f);
     }
 
     void HandleAttackSFX(PublishEventArgs args)
     {
-        Debug.Log("HandleAttackSFX Fired!!!");
-        playSFX("attack", player.transform, 1f);
+        playSFX("spell_cast_progress", player.transform, 1f);
     }
 
     public void playSFX(string clipName, Transform trans, float volume = 0f)

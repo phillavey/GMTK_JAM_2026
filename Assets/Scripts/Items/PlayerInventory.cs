@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerInventory : MonoBehaviour
 {
-    
-    private Camera mainCamera;
+
+    [SerializeField] private Camera mainCamera;
 
     [SerializeField] private SpriteRenderer itemRenderer;
     [Header("Held Item Sprites")]
@@ -46,7 +46,6 @@ public class PlayerInventory : MonoBehaviour
 
     void Start()
     {
-        mainCamera = Camera.main;
         swingScalar = itemRenderer.transform.localScale * 1.4f;
 
         EVENT_BUS.Subscribe(EventType.ATTACK, Attack);
@@ -129,7 +128,8 @@ public class PlayerInventory : MonoBehaviour
     private float GetAngleFromPlayerToMouse()
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
-        mousePos = mainCamera.ScreenToWorldPoint(mousePos);
+        mousePos = mainCamera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, 100f));
+        
         return Mathf.Atan2(mousePos.y - transform.parent.position.y, mousePos.x - transform.parent.position.x) * Mathf.Rad2Deg;
     }
 
