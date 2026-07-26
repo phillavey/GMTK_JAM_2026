@@ -64,6 +64,8 @@ public class MasterGameController : MonoBehaviour
         EVENT_BUS.Subscribe(EventType.EVENT_STARTED, SpawnRandomTask);
         EVENT_BUS.Subscribe(EventType.ENEMY_KILLED, OnEnemyKilled);
         EVENT_BUS.Subscribe(EventType.TIMER_FINISHED, DoGameOver);
+        EVENT_BUS.Subscribe(EventType.NUKE_DEFUSED, DoNukeDefused);
+        EVENT_BUS.Subscribe(EventType.BOB_FED, DoBobFed);
     }
 
     private string CountKey(GAME_TASK task, ROOM room) => $"{task}_{room}";
@@ -73,6 +75,16 @@ public class MasterGameController : MonoBehaviour
         string key = CountKey(task, room);
         if (activeTaskCounts.ContainsKey(key)) activeTaskCounts[key] += amount;
         else activeTaskCounts[key] = amount;
+    }
+
+    void DoNukeDefused(PublishEventArgs args)
+    {
+        nukeIsActive = false;
+    }
+
+    void DoBobFed(PublishEventArgs args)
+    {
+        bobIsActive = false;
     }
 
     private void OnEnemyKilled(PublishEventArgs args)
@@ -108,7 +120,7 @@ public class MasterGameController : MonoBehaviour
             // TODO
             //Debug.Log("SPAWNING TASK");
             //SpawnRandomTask(null);
-            SpawnTask(GAME_TASK.GHOSTBUSTING, ROOM.LIVING_ROOM);
+            //SpawnTask(GAME_TASK.FEEDING_BOB, ROOM.LIVING_ROOM);
         }
     }
 
@@ -159,7 +171,7 @@ public class MasterGameController : MonoBehaviour
                 SpawnGhostbustingTask(room);
                 break;
             case GAME_TASK.NUKE_DIFFUSING:
-
+                nukeIsActive = true;
                 EVENT_BUS.Publish(EventType.NUKEING_IS_NOW_LEGAL, null);
                 break;
             case GAME_TASK.TOILET_PLUNGING:
@@ -275,6 +287,7 @@ public class MasterGameController : MonoBehaviour
 
     void SpawnFeedBobTask(ROOM room)
     {
+        bobIsActive = true;
         GameObject bobington = Instantiate(bob);
         Bob bComp = bobington.GetComponent<Bob>();
         if (bComp != null) bComp.taskRoom = room;
