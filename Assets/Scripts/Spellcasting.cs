@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -13,6 +14,7 @@ public class Spellcasting : MonoBehaviour
     [SerializeField] private int spellProgressRequired = 50; // progress required to complete the spell
 
     [SerializeField] private GameObject dialogObj;
+    [SerializeField] private CinemachineImpulseSource impulseSrc;
     [SerializeField] Light2D globalLight;
 
     public int focusMeter;
@@ -99,16 +101,14 @@ public class Spellcasting : MonoBehaviour
         }
     }
 
-    //void DipGlobalLight()
-    //{
-    //    globalLight.intensity -= 0.1f;
-    //}
-
     IEnumerator ShowDialog()
     {
         dialogObj.SetActive(true);
         globalLight.intensity = 0.3f;
+        impulseSrc.GenerateImpulse();
+
         yield return new WaitForSeconds(3);
+        
         globalLight.intensity = 1f;
         dialogObj.SetActive(false);
     }

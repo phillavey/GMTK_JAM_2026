@@ -105,9 +105,10 @@ public class MasterGameController : MonoBehaviour
     {
         if (Keyboard.current != null && Keyboard.current.tKey.wasPressedThisFrame)
         {
-            Debug.Log("SPAWNING TASK");
+            // TODO
+            //Debug.Log("SPAWNING TASK");
             //SpawnRandomTask(null);
-            SpawnTask(GAME_TASK.GHOSTBUSTING, ROOM.LIVING_ROOM);
+            //SpawnTask(GAME_TASK.GHOSTBUSTING, ROOM.LIVING_ROOM);
         }
     }
 
