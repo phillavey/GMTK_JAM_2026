@@ -108,7 +108,7 @@ public class MasterGameController : MonoBehaviour
             // TODO
             //Debug.Log("SPAWNING TASK");
             //SpawnRandomTask(null);
-            //SpawnTask(GAME_TASK.GHOSTBUSTING, ROOM.LIVING_ROOM);
+            SpawnTask(GAME_TASK.GHOSTBUSTING, ROOM.LIVING_ROOM);
         }
     }
 

@@ -23,9 +23,9 @@ public class GhostEnemy : MonoBehaviour, IEnemy
     {
         var direction = Vector3.zero;
         direction = playerCharacter.transform.position - transform.position;
-        rb.AddRelativeForce(direction.normalized * moveSpeed, ForceMode2D.Force);
+        rb.AddRelativeForce(direction.normalized * moveSpeed, ForceMode2D.Impulse);
         spriteRenderer.flipX = playerCharacter.transform.position.x < transform.position.x;
-        rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, 10f);
+        rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, 2.5f);
 
         Vector3 tempPos = transform.position;
         tempPos.y += Mathf.Sin(Time.fixedTime * Mathf.PI * 5f) * 0.015f;
