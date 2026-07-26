@@ -17,10 +17,10 @@ public class UIClock : MonoBehaviour
             maxTime = GlobalTimer.Instance.TimeRemaining;
         }
 
-        if (timerText != null)
-        {
-            timerText.gameObject.SetActive(false);
-        }
+        //if (timerText != null)
+        //{
+        //    timerText.gameObject.SetActive(false);
+        //}
     }
 
     void Update()
