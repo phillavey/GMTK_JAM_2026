@@ -1,24 +1,52 @@
 using System;
 using UnityEngine;
-using TMPro; // Required for Canvas TextMeshPro elements
+using UnityEngine.UI;
+using TMPro;
 
 public class UIClock : MonoBehaviour
 {
-    // Expose the text component to the Unity Inspector
     [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private Image timerBar;
+
+    private float maxTime = -1f;
+
+    void Start()
+    {
+        if (GlobalTimer.Instance != null)
+        {
+            maxTime = GlobalTimer.Instance.TimeRemaining;
+        }
+
+        if (timerText != null)
+        {
+            timerText.gameObject.SetActive(false);
+        }
+    }
 
     void Update()
     {
-        // Safety checks
-        if (timerText == null || GlobalTimer.Instance == null)
+        if (GlobalTimer.Instance == null)
         {
             return;
         }
 
         float timeRemaining = GlobalTimer.Instance.TimeRemaining;
-        TimeSpan time = TimeSpan.FromSeconds(timeRemaining);
 
-        // Update the Canvas text
-        timerText.text = time.ToString(@"mm\:ss");
+        if (timerText != null && timerText.gameObject.activeSelf)
+        {
+            TimeSpan time = TimeSpan.FromSeconds(timeRemaining);
+            timerText.text = time.ToString(@"mm\:ss");
+        }
+
+        if (timerBar != null)
+        {
+            if (maxTime <= 0f)
+            {
+                maxTime = GlobalTimer.Instance.TimeRemaining > 0f ? GlobalTimer.Instance.TimeRemaining : 1f;
+            }
+
+            float fill = maxTime > 0f ? Mathf.Clamp01(timeRemaining / maxTime) : 0f;
+            timerBar.fillAmount = fill;
+        }
     }
 }

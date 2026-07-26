@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GlobalTimer : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GlobalTimer : MonoBehaviour
     private float spellCastTimeIncreaseAmount = 30f;
     private float SpawnTimer = 3f;
     private float nukeTimer = 60f;
+    private float lastPublishedNukeTime = -1f;
 
     void OnEnable()
     {
@@ -49,6 +51,12 @@ public class GlobalTimer : MonoBehaviour
         if (IsNukeTimerRunning)
         {
             nukeTimer -= Time.deltaTime;
+            if (Mathf.Abs(nukeTimer - lastPublishedNukeTime) > 0.05f)
+            {
+                var data = new Dictionary<string, object> { { "time_remaining", nukeTimer } };
+                EVENT_BUS.Publish(EventType.NUKE_TIMER_TICK, new PublishEventArgs(data));
+                lastPublishedNukeTime = nukeTimer;
+            }
         }
 
         if (SpawnTimer <= 0)
