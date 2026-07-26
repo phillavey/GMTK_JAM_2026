@@ -19,10 +19,6 @@ public class Bob : MonoBehaviour, IEnemy
             };
             EVENT_BUS.Publish(EventType.TASK_COMPLETED, new PublishEventArgs(eventArgs));
             Destroy(this.gameObject);
-        } else
-        {
-            // Make bob mad??
         }
-        
     }
 }

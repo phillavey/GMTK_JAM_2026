@@ -6,8 +6,8 @@ public class OOB : MonoBehaviour
     {
         Debug.Log(collision.gameObject);
         GameObject obj = collision.gameObject;
-        obj.SetActive(false);
+        //obj.SetActive(false);
         obj.transform.position = new Vector3(-50, -8, 0);
-        obj.SetActive(true);
+        //obj.SetActive(true);
     }
 }

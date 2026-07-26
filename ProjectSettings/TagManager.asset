@@ -55,6 +55,9 @@ TagManager:
   - name: ALWAYS_TOP
     uniqueID: 629720675
     locked: 0
+  - name: SUPER_TOP
+    uniqueID: 1854060001
+    locked: 0
   m_RenderingLayers:
   - Default
   m_MigratedRenderPipelines: []

@@ -29,6 +29,7 @@ public class PlayerCharacter : MonoBehaviour
     private float horizontal = 0;
     private float vertical = 0;
     private Spellcasting spellScript;
+    private PlayerInventory inventory;
 
     void Start()
     {
@@ -37,6 +38,7 @@ public class PlayerCharacter : MonoBehaviour
         this.throw_ = InputSystem.actions.FindAction("Throw");
         this.sprint = InputSystem.actions.FindAction("Sprint");
         spellScript = GetComponentInChildren<Spellcasting>();
+        inventory = GetComponentInChildren<PlayerInventory>();
 
         MusicController.instance?.PlayMusic("main_theme");
     }
@@ -76,7 +78,7 @@ public class PlayerCharacter : MonoBehaviour
 
         sprite.flipX = horizontal < 0;
 
-        if (attack.WasPressedThisFrame()) {
+        if (attack.WasPressedThisFrame() && inventory.CurrentItem != PlayerInventory.ItemType.NONE) {
             EVENT_BUS.Publish(EventType.ATTACK, null);
         }
 
@@ -106,6 +108,7 @@ public class PlayerCharacter : MonoBehaviour
         if (spellScript.focusMeter <= 0)
             return;
 
+        SFX_Controller.instance.playSFX("zoom", transform, .3f);
         EVENT_BUS.Publish(EventType.SPRINTED, null);
         impulseSource.GenerateImpulse();
         sprintCounter = sprintDuration;

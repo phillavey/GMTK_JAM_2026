@@ -1,4 +1,7 @@
+using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Spellcasting : MonoBehaviour
 {
@@ -8,6 +11,9 @@ public class Spellcasting : MonoBehaviour
     [SerializeField] private int manaCostPerSwing = 5; // mana consumed per swing in seance room
     [SerializeField] private int spellProgressPerSwing = 5; // progress added per swing
     [SerializeField] private int spellProgressRequired = 50; // progress required to complete the spell
+
+    [SerializeField] private GameObject dialogObj;
+    [SerializeField] Light2D globalLight;
 
     public int focusMeter;
     public int spellProgress;
@@ -21,7 +27,6 @@ public class Spellcasting : MonoBehaviour
         EVENT_BUS.Subscribe(EventType.SPRINTED, DecreaseManaForSprinting);
         playerInventory = GetComponent<PlayerInventory>();
 
-        focusMeter = 5;
         spellProgress = 0;
     }
 
@@ -90,6 +95,38 @@ public class Spellcasting : MonoBehaviour
             spellProgress = 0;
             EVENT_BUS.Publish(EventType.SPELL_PROGRESS_UPDATED, null);
             EVENT_BUS.Publish(EventType.SPELL_CAST_SUCCESS, null);
+            StartCoroutine(ShowDialog());
         }
+    }
+
+    //void DipGlobalLight()
+    //{
+    //    globalLight.intensity -= 0.1f;
+    //}
+
+    IEnumerator ShowDialog()
+    {
+        dialogObj.SetActive(true);
+        globalLight.intensity = 0.3f;
+        yield return new WaitForSeconds(3);
+        globalLight.intensity = 1f;
+        dialogObj.SetActive(false);
+    }
+
+    void setRandomSpellName()
+    {
+        // TODO
+        ArrayList phrases1 = new ArrayList();
+        ArrayList phrases2 = new ArrayList();
+        phrases1.Add(" f l a t_");
+        phrases2.Add("    t i r e");
+        phrases1.Add("");
+        phrases2.Add("");
+        phrases1.Add("");
+        phrases2.Add("");
+       
+        System.Random r = new System.Random();
+        r.Next(phrases1.Count);
+
     }
 }

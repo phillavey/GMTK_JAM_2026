@@ -41,7 +41,7 @@ public class SFX_Controller : MonoBehaviour
 
     void PlayNukeSFX(PublishEventArgs args)
     {
-        playSFX("nuke_alert", player.transform, 0.75f);
+        playSFX("nuke_alert", player.transform, 0.4f);
     }
 
     void HandleAttackSFX(PublishEventArgs args)
